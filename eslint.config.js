@@ -18,6 +18,7 @@ export default tseslint.config(
       '.lighthouseci/**',
       'reports/**',
       'apps/docs/.astro/**',
+      '.stryker-tmp/**',
     ],
   },
   js.configs.recommended,
