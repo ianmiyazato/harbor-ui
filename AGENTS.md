@@ -79,27 +79,27 @@ Rebase merges keep the test → feat commit pairs visible. Details: [`docs/agent
 
 | # | Date | Milestone | Commit | URL |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| 1 | 2026-09-28 | M4 docs site (`v0.4.0`) | `8102715` | https://harbor-ui-docs.vercel.app |
 
-Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agents/deploy.md).
+Built production deploys: **1 / 5** · previews: 0 · projects: 1 · functions: 0. Rules: [`docs/agents/deploy.md`](docs/agents/deploy.md).
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-023 Deploys via Vercel API gitSource (public repo); domain harbor-ui-docs.vercel.app; protection = previews only.
 - D-022 Lighthouse via Node API + Playwright Chromium (chrome-launcher can't run under WSL sandbox).
 - D-021 States row = static inert specimens; live demo is the island; facts computed and measured in e2e.
 - D-020 Full package 45.1 kB gz (Radix) > 35 kB target; kept Radix, CI enforces per-usage budgets; Button 0.64 kB.
 - D-019 Portalled content copies local theme/motion/timescale from its anchor when opening.
 - D-018 Loading-width: unit test asserts the mechanism; the pixel width assertion runs in Playwright (jsdom has no layout).
-- D-017 One states registry per component drives axe tests, docs and screenshots; `[data-preview]` shows pseudo-states live.
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M4 deploy #1: https://harbor-ui-docs.vercel.app (v0.4.0, 8102715); `pnpm verify:prod` passes on production (19 pages, 0 console errors, 0 serious axe).
 - M4 #31 close: Lighthouse on 11 pages (perf 99–100, a11y/BP/SEO 100) recorded in docs/perf/lighthouse-m4.md. M4 complete.
 - M4 #30 docs: home (pitch, stats from data, 3 live tiles), principles (5, each with repo evidence), JS budget + 390px overflow e2e checks.
 - M4 #29 docs: components index + 12 pages (live island, static states row, scoped theme toggle, 3 measured a11y facts, generated props, snippet with extracted token list, do/don't); fix: disabled descriptions stay readable.
 - M4 #28 docs: Foundations (Color with generated contrast report, Type and space, Motion with replayable durations/curves and reduced lanes); zero React JS.
 - M4 #27 docs: layout shell, skip link, Light/Dark/High-contrast switcher (native radios, no-flash inline script, follows OS until chosen).
-- M4 #26 docs: Astro 5 static scaffold (React + MDX integrations), Playwright e2e against `astro preview`, CI runs e2e.
 
 ## Known gaps
 
@@ -109,6 +109,6 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
   and deleted in `chore: check formatting in lint and ignore local pnpm store`. The files no longer exist in the tree,
   but they remain in git history (~55 MB pack). Rewriting published history was not done autonomously; owner decision.
 - **Vercel Git link missing.** The Vercel GitHub App is not installed on `ianmiyazato/harbor-ui`, so
-  `main` merges cannot trigger builds. Fix: install https://github.com/apps/vercel for this repo, then
-  Vercel → harbor-ui → Settings → Git → Connect `ianmiyazato/harbor-ui`. Until then deploys use the fallback
-  in [`docs/agents/deploy.md`](docs/agents/deploy.md).
+  `main` merges do not auto-deploy; each milestone deploy is triggered through the Vercel API from the
+  public repo (see [`docs/agents/deploy.md`](docs/agents/deploy.md)). Optional fix: install
+  https://github.com/apps/vercel for this repo and connect it in Vercel → harbor-ui → Settings → Git.
