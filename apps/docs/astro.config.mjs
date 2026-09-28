@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 
 // Fully static output: no adapter, no server functions. React hydrates only live demos.
 export default defineConfig({
-  site: 'https://harbor-ui.vercel.app',
+  site: 'https://harbor-ui-docs.vercel.app',
   output: 'static',
   trailingSlash: 'never',
   integrations: [react(), mdx()],
