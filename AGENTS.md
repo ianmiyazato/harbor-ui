@@ -72,7 +72,7 @@ Rebase merges keep the test → feat commit pairs visible. Details: [`docs/agent
 - [x] M3 Select, Tabs, Dialog, Tooltip, Toast, size-limit
 - [x] M4 Docs site: Home, Foundations, Components, Principles — deploy #1
 - [x] M5 Micro-interaction lab (6 interactions) — deploy #2
-- [ ] M6 Visual regression, coverage, Lighthouse, ADRs
+- [x] M6 Visual regression, coverage, Lighthouse, ADRs
 - [ ] M7 v1.0.0 release, README, `docs/CALL-BRIEF.md` — deploy #3
 
 ## Deploy ledger (budget: 5 production deploys, 0 previews, 1 project, no functions)
@@ -80,26 +80,27 @@ Rebase merges keep the test → feat commit pairs visible. Details: [`docs/agent
 | # | Date | Milestone | Commit | URL |
 |---|---|---|---|---|
 | 1 | 2026-09-28 | M4 docs site (`v0.4.0`) | `8102715` | https://harbor-ui-docs.vercel.app |
+| 2 | 2026-09-28 | M5 micro-interaction lab (`v0.5.0`) | `8cf7f25` | https://harbor-ui-docs.vercel.app/lab |
 
-Built production deploys: **1 / 5** · previews: 0 · projects: 1 · functions: 0. Rules: [`docs/agents/deploy.md`](docs/agents/deploy.md).
+Built production deploys: **2 / 5** · previews: 0 · projects: 1 · functions: 0. Rules: [`docs/agents/deploy.md`](docs/agents/deploy.md).
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-025 Visual baselines shared local/CI Linux, 1% tolerance, reduced motion for determinism.
 - D-024 Lab JS 95.4 kB gz (65.9 runtime + 29.5 lab); 0 long frames unthrottled, 1 at 4× (VT capture).
 - D-023 Deploys via Vercel API gitSource (public repo); domain harbor-ui-docs.vercel.app; protection = previews only.
 - D-022 Lighthouse via Node API + Playwright Chromium (chrome-launcher can't run under WSL sandbox).
 - D-021 States row = static inert specimens; live demo is the island; facts computed and measured in e2e.
 - D-020 Full package 45.1 kB gz (Radix) > 35 kB target; kept Radix, CI enforces per-usage budgets; Button 0.64 kB.
-- D-019 Portalled content copies local theme/motion/timescale from its anchor when opening.
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M6 #36 quality: 54 visual baselines (PRs into main), coverage gates (react 97.74% / tokens 100% statements), Lighthouse CI + medians 100/100/99, Stryker 87.76%, 5 ADRs, font preload (lab CLS 0.031 → 0).
+- M5 deploy #2: /lab live (v0.5.0, 8cf7f25); production verified with Playwright: 43 checks (20 pages + lab behaviors) pass.
 - M5 #33 lab: 6 interactions (like, reorder, skeleton, toast, card→detail, pull) with spec/replay/×5/reduced; compositor-only + CLS 0 verified in e2e; frame timing in docs/perf/lab.md; fix(checkbox) hit target.
 - M4 deploy #1: https://harbor-ui-docs.vercel.app (v0.4.0, 8102715); `pnpm verify:prod` passes on production (19 pages, 0 console errors, 0 serious axe).
 - M4 #31 close: Lighthouse on 11 pages (perf 99–100, a11y/BP/SEO 100) recorded in docs/perf/lighthouse-m4.md. M4 complete.
 - M4 #30 docs: home (pitch, stats from data, 3 live tiles), principles (5, each with repo evidence), JS budget + 390px overflow e2e checks.
-- M4 #29 docs: components index + 12 pages (live island, static states row, scoped theme toggle, 3 measured a11y facts, generated props, snippet with extracted token list, do/don't); fix: disabled descriptions stay readable.
-- M4 #28 docs: Foundations (Color with generated contrast report, Type and space, Motion with replayable durations/curves and reduced lanes); zero React JS.
 
 ## Known gaps
 
