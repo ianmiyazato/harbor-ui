@@ -1,0 +1,81 @@
+.skeleton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: var(--hb-color-skeleton-base);
+}
+
+.skeleton[data-shape='text'] {
+  height: var(--hb-font-leading-base);
+  border-radius: var(--hb-radius-sm);
+}
+
+.skeleton[data-shape='rect'] {
+  border-radius: var(--hb-radius-lg);
+}
+
+.skeleton[data-shape='circle'] {
+  border-radius: var(--hb-radius-full);
+}
+
+/* Multi-line text: the lines carry the fill, the wrapper only stacks them. */
+.stack {
+  display: grid;
+  gap: var(--hb-space-2);
+  height: auto;
+  background-color: transparent;
+}
+
+.skeleton[data-shape='text'].stack {
+  height: auto;
+}
+
+.line {
+  position: relative;
+  display: block;
+  height: var(--hb-font-leading-base);
+  overflow: hidden;
+  border-radius: var(--hb-radius-sm);
+  background-color: var(--hb-color-skeleton-base);
+}
+
+.line[data-last] {
+  width: 60%;
+}
+
+/* The shimmer moves a highlight with transform only, so it stays on the compositor. */
+.skeleton[data-animated]:not(.stack)::after,
+.skeleton[data-animated] .line::after {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--hb-color-skeleton-highlight),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer var(--hb-motion-loop-shimmer) var(--hb-motion-easing-standard) infinite;
+  content: '';
+}
+
+/* Reduced motion: a static placeholder. Covers the OS setting before hydration and scoped previews. */
+:global([data-motion='reduced']) .skeleton::after,
+:global([data-motion='reduced']) .line::after {
+  animation: none;
+  content: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after,
+  .line::after {
+    animation: none;
+    content: none;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}

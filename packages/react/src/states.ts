@@ -6,3 +6,4 @@ export { inputStates } from './input/Input.states';
 export { checkboxStates } from './checkbox/Checkbox.states';
 export { switchStates } from './switch/Switch.states';
 export { badgeStates, badgeTones } from './badge/Badge.states';
+export { skeletonStates } from './skeleton/Skeleton.states';
