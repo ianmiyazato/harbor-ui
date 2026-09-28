@@ -94,12 +94,12 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M4 #30 docs: home (pitch, stats from data, 3 live tiles), principles (5, each with repo evidence), JS budget + 390px overflow e2e checks.
 - M4 #29 docs: components index + 12 pages (live island, static states row, scoped theme toggle, 3 measured a11y facts, generated props, snippet with extracted token list, do/don't); fix: disabled descriptions stay readable.
 - M4 #28 docs: Foundations (Color with generated contrast report, Type and space, Motion with replayable durations/curves and reduced lanes); zero React JS.
 - M4 #27 docs: layout shell, skip link, Light/Dark/High-contrast switcher (native radios, no-flash inline script, follows OS until chosen).
 - M4 #26 docs: Astro 5 static scaffold (React + MDX integrations), Playwright e2e against `astro preview`, CI runs e2e.
 - M3 #24 ci: size-limit gzip budgets per usage pattern in CI (Button 0.64 kB, full 45.1 kB). M3 complete.
-- M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
 
 ## Known gaps
 
