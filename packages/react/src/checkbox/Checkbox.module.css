@@ -1,0 +1,130 @@
+.field {
+  display: grid;
+  gap: var(--hb-space-1);
+  font-family: var(--hb-font-family-ui);
+}
+
+/* The whole row is the target: at least 24px tall even though the box is 20px. */
+.row {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--hb-space-2);
+  min-height: var(--hb-size-target-min);
+  cursor: pointer;
+}
+
+.control {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  padding-block: calc((var(--hb-font-leading-md) - var(--hb-size-icon-md)) / 2);
+}
+
+/* The native input sits on top of the box: native focus, keyboard, forms and label. */
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.box {
+  display: grid;
+  place-items: center;
+  width: var(--hb-size-icon-md);
+  height: var(--hb-size-icon-md);
+  border: var(--hb-border-width-thin) solid var(--hb-color-border-strong);
+  border-radius: var(--hb-radius-sm);
+  background-color: var(--hb-color-surface-raised);
+  color: var(--hb-color-control-thumb);
+  transition-property: background-color, border-color, transform;
+  transition-duration: var(--hb-motion-duration-instant);
+  transition-timing-function: var(--hb-motion-easing-standard);
+}
+
+.box > svg {
+  grid-area: 1 / 1;
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(var(--hb-motion-scale-enter));
+  transition-property: opacity, transform;
+  transition-duration: var(--hb-motion-duration-fast);
+  transition-timing-function: var(--hb-motion-easing-emphasized);
+}
+
+.input:hover:not(:disabled) + .box,
+.input[data-preview='hover'] + .box {
+  border-color: var(--hb-color-text-muted);
+}
+
+.input:active:not(:disabled) + .box,
+.input[data-preview='active'] + .box {
+  transform: scale(var(--hb-motion-scale-press));
+}
+
+.input:focus-visible + .box,
+.input[data-preview='focus-visible'] + .box {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+.input:checked + .box,
+.input:indeterminate + .box {
+  border-color: var(--hb-color-control-checked);
+  background-color: var(--hb-color-control-checked);
+}
+
+.input:checked + .box .check,
+.input:indeterminate + .box .dash {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.input:indeterminate + .box .check {
+  opacity: 0;
+}
+
+.field[data-invalid] .box {
+  border-color: var(--hb-color-border-danger);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.input:disabled + .box,
+.field:has(.input:disabled) .text {
+  opacity: var(--hb-opacity-disabled);
+}
+
+.text {
+  display: grid;
+  gap: var(--hb-space-1);
+}
+
+.label {
+  color: var(--hb-color-text-default);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+}
+
+.description {
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
+
+.error {
+  margin: 0;
+  padding-inline-start: calc(var(--hb-size-icon-md) + var(--hb-space-2));
+  color: var(--hb-color-text-danger);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
