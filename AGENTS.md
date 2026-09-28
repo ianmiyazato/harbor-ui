@@ -11,6 +11,12 @@ built as public portfolio evidence of design sensibility, frontend engineering a
 - Every number in the README, docs or call brief comes from a real run. Never estimate.
 - Nothing is built to look busy: if it isn't demoed, tested or documented, it doesn't ship.
 
+## Toolchain (recorded at M0, 2026-09-28)
+
+Node 24.11 local / 22 in CI (`.nvmrc`), pnpm 10.34, gh authed (`ianmiyazato`), Vercel via MCP
+(team `miyazato`, project `harbor-ui` = `prj_rpoTbkRGlfjr02wL76jwxA4iRlou`; CLI token invalid),
+Chrome DevTools MCP not connected (Playwright Chromium fallback). See D-002..D-004.
+
 ## Architecture map
 
 ```
@@ -60,7 +66,7 @@ Rebase merges keep the test → feat commit pairs visible. Details: [`docs/agent
 
 ## Milestone checklist
 
-- [ ] M0 Repo, branches, protection, CI, AGENTS.md, Vercel project configured (not deployed)
+- [x] M0 Repo, branches, protection, CI, AGENTS.md, Vercel project configured (not deployed)
 - [ ] M1 Tokens: schema, contrast matrix, motion and build-output tests
 - [ ] M2 Button, IconButton, Input, Checkbox, Switch, Badge, Skeleton
 - [ ] M3 Select, Tabs, Dialog, Tooltip, Toast, size-limit
@@ -79,6 +85,7 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-010 Vercel project created unlinked: the Vercel GitHub App is not installed for this repo.
 - D-009 Turbo's injected agent-guidance block is disabled (keeps this index under 150 lines).
 - D-008 Deploys are opt-in: `main` only, `[deploy]` in the merge commit, and a diff under `apps/docs` or `packages`.
 - D-005 Branch protection with 0 required approvals (solo maintainer cannot self-approve).
@@ -86,8 +93,12 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
 - M0 bootstrap: repository, license, AGENTS.md.
+- M0 #2 close M0: toolchain record, Vercel project, known gaps.
 - M0 #1 workspace (pnpm, turbo, TS, ESLint, Vitest), CI `check` job, Vercel config + tested ignore step.
 
 ## Known gaps
 
-- None yet.
+- **Vercel Git link missing.** The Vercel GitHub App is not installed on `ianmiyazato/harbor-ui`, so
+  `main` merges cannot trigger builds. Fix: install https://github.com/apps/vercel for this repo, then
+  Vercel → harbor-ui → Settings → Git → Connect `ianmiyazato/harbor-ui`. Until then deploys use the fallback
+  in [`docs/agents/deploy.md`](docs/agents/deploy.md).
