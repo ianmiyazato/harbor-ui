@@ -1,0 +1,63 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hb-space-1);
+  min-height: var(--hb-size-icon-lg);
+  padding-inline: var(--hb-space-2);
+  border: var(--hb-border-width-thin) solid transparent;
+  border-radius: var(--hb-radius-sm);
+  font-family: var(--hb-font-family-ui);
+  font-size: var(--hb-font-size-xs);
+  line-height: var(--hb-font-leading-xs);
+  font-weight: var(--hb-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.badge[data-size='sm'] {
+  min-height: var(--hb-size-icon-md);
+  padding-inline: var(--hb-space-1);
+}
+
+.dot {
+  width: var(--hb-space-2);
+  height: var(--hb-space-2);
+  border-radius: var(--hb-radius-full);
+  background-color: currentcolor;
+}
+
+/* In high contrast the fill is black, so the border (the fg color) carries the shape. */
+.badge[data-tone='neutral'] {
+  background-color: var(--hb-color-status-neutral-bg);
+  color: var(--hb-color-status-neutral-fg);
+}
+
+.badge[data-tone='success'] {
+  background-color: var(--hb-color-status-success-bg);
+  color: var(--hb-color-status-success-fg);
+}
+
+.badge[data-tone='warning'] {
+  background-color: var(--hb-color-status-warning-bg);
+  color: var(--hb-color-status-warning-fg);
+}
+
+.badge[data-tone='danger'] {
+  background-color: var(--hb-color-status-danger-bg);
+  color: var(--hb-color-status-danger-fg);
+}
+
+.badge[data-tone='info'] {
+  background-color: var(--hb-color-status-info-bg);
+  color: var(--hb-color-status-info-fg);
+}
+
+:global([data-theme='hc']) .badge {
+  border-color: currentcolor;
+}
+
+@media (prefers-contrast: more) {
+  .badge {
+    border-color: currentcolor;
+  }
+}

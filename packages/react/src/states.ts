@@ -5,3 +5,4 @@ export { iconButtonStates } from './icon-button/IconButton.states';
 export { inputStates } from './input/Input.states';
 export { checkboxStates } from './checkbox/Checkbox.states';
 export { switchStates } from './switch/Switch.states';
+export { badgeStates, badgeTones } from './badge/Badge.states';
