@@ -1,13 +1,17 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createRef, useImperativeHandle } from 'react';
+import type { Ref } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { emulateReducedMotion } from '../../test/utils';
 import { ToastProvider, useToast } from './Toast';
 import type { ToastOptions, ToastProviderProps } from './Toast';
 
-let api: ReturnType<typeof useToast>;
-function Capture() {
-  api = useToast();
+type Api = ReturnType<typeof useToast>;
+const apiRef = createRef<Api>();
+function Capture({ handle }: { handle?: Ref<Api> }) {
+  const api = useToast();
+  useImperativeHandle(handle, () => api, [api]);
   return <button>Page button</button>;
 }
 
@@ -15,13 +19,13 @@ function setup(props: Partial<ToastProviderProps> = {}) {
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   render(
     <ToastProvider {...props}>
-      <Capture />
+      <Capture handle={apiRef} />
     </ToastProvider>,
   );
   return user;
 }
 
-const show = (options: ToastOptions) => act(() => void api.toast(options));
+const show = (options: ToastOptions) => act(() => void apiRef.current?.toast(options));
 const advance = (ms: number) => act(() => vi.advanceTimersByTime(ms));
 
 beforeEach(() => {
@@ -49,6 +53,7 @@ describe('Toast', () => {
   it('announces politely through a live region', () => {
     setup();
     show({ title: 'Saved' });
+    advance(50); // Radix renders the announcement on the next frame.
     const status = screen
       .getAllByRole('status')
       .find((el) => el.getAttribute('aria-live') === 'polite');
@@ -124,9 +129,9 @@ describe('Toast', () => {
     setup();
     let id = '';
     act(() => {
-      id = api.toast({ title: 'Uploading' });
+      id = apiRef.current?.toast({ title: 'Uploading' }) ?? '';
     });
-    act(() => api.dismiss(id));
+    act(() => apiRef.current?.dismiss(id));
     expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
   });
 
