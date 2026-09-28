@@ -11,3 +11,4 @@
 - M2 #10 react: stylelint token-only rules (no hex/rgb/named colors, px/rem/ms/s, palette vars, raw weights/z/easing), tested with fixtures.
 - M2 #11 button: 4 variants × 3 sizes, loading without layout shift, reduced-motion spinner, states registry (`@ianmiyazato/harbor-react/states`), axe on 24 variant×state combos.
 - M2 #12 icon-button: square Button, `aria-label` required at the type level (proven by @ts-expect-error in typecheck), axe on 24 combos.
+- M2 #13 input: label, hint, polite error region, character count (visual n/max + one status at the limit), controlled/uncontrolled.
