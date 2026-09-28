@@ -12,7 +12,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: { index: 'src/index.ts', states: 'src/states.ts' },
       formats: ['es'],
       cssFileName: 'styles',
     },
