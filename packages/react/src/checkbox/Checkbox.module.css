@@ -99,8 +99,9 @@
   cursor: not-allowed;
 }
 
+/* Dim the control and its label; the description stays readable because it often says why. */
 .input:disabled + .box,
-.field:has(.input:disabled) .text {
+.field:has(.input:disabled) .label {
   opacity: var(--hb-opacity-disabled);
 }
 
