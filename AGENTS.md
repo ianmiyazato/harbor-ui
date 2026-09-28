@@ -94,6 +94,7 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M1 #6 tokens: contrast matrix, 39 pairs × 3 themes = 117 checks, all passing; writes dist/contrast-report.json.
 - M1 #5 tokens: palette (OKLCH scales), 44 semantic colors × 3 themes, type, space, radius, size, elevation; schema tests.
 - M0 bootstrap: repository, license, AGENTS.md.
 - M0 #2 close M0: toolchain record, Vercel project, known gaps.
