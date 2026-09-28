@@ -1,1 +1,1 @@
-export {};
+export { useReducedMotion } from './internal/useReducedMotion';
