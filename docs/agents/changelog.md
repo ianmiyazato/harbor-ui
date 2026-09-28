@@ -27,3 +27,4 @@
 - M4 #28 docs: Foundations (Color with generated contrast report, Type and space, Motion with replayable durations/curves and reduced lanes); zero React JS.
 - M4 #29 docs: components index + 12 pages (live island, static states row, scoped theme toggle, 3 measured a11y facts, generated props, snippet with extracted token list, do/don't); fix: disabled descriptions stay readable.
 - M4 #30 docs: home (pitch, stats from data, 3 live tiles), principles (5, each with repo evidence), JS budget + 390px overflow e2e checks.
+- M4 #31 close: Lighthouse on 11 pages (perf 99–100, a11y/BP/SEO 100) recorded in docs/perf/lighthouse-m4.md. M4 complete.
