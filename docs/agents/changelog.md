@@ -23,3 +23,4 @@
 - M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
 - M3 #24 ci: size-limit gzip budgets per usage pattern in CI (Button 0.64 kB, full 45.1 kB). M3 complete.
 - M4 #26 docs: Astro 5 static scaffold (React + MDX integrations), Playwright e2e against `astro preview`, CI runs e2e.
+- M4 #27 docs: layout shell, skip link, Light/Dark/High-contrast switcher (native radios, no-flash inline script, follows OS until chosen).
