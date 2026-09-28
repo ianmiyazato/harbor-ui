@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import { CardTile, LikeTile, PullTile, ReorderTile, SkeletonTile, ToastTile } from '../lab/tiles';
+import { byName } from '../lib/tokens';
+import type { LabSpec } from '../lab/LabTile';
+
+/** Every number in the specs comes from tokens.json at build time. */
+const ms = (name: string) => {
+  const t = byName.get(name);
+  if (!t) throw new Error(name);
+  if (t.motionType === 'spring') return `${/calc\((\d+)ms/.exec(String(t.css))?.[1]}ms`;
+  return `${t.value}ms`;
+};
+const spring = (name: string) => {
+  const v = byName.get(`motion.spring.${name}`)?.value as { stiffness: number; damping: number; mass: number };
+  return `${name}: stiffness ${v.stiffness}, damping ${v.damping}, mass ${v.mass}`;
+};
+const ease = (name: string) => `easing.${name}, ${byName.get(`motion.easing.${name}`)?.value}`;
+const px = (name: string) => `${byName.get(name)?.value}px`;
+
+const specs: Record<string, LabSpec> = {
+  like: {
+    duration: `spring.snappy (${ms('motion.spring.snappy')}) pop to ${byName.get('motion.scale.pop')?.value}×; duration.base (${ms('motion.duration.base')}) shake of ${px('motion.distance.shake')}`,
+    kind: 'Spring',
+    easing: spring('snappy'),
+    communicates:
+      'Your action counted immediately. If the server disagrees, the count rolls back with a shake and a retry.',
+  },
+  reorder: {
+    duration: `spring.gentle (${ms('motion.spring.gentle')}) for neighbours; spring.snappy (${ms('motion.spring.snappy')}) lift of ${px('motion.distance.lift')}`,
+    kind: 'Spring',
+    easing: spring('gentle'),
+    communicates:
+      'The item is picked up and the others make room, so you always see where it will land.',
+  },
+  skeleton: {
+    duration: `duration.crossfade (${ms('motion.duration.crossfade')}); shimmer loop ${ms('motion.loop.shimmer')}`,
+    kind: 'Easing',
+    easing: ease('standard'),
+    communicates: 'Content is on its way and will land exactly here: same shape, no jump.',
+  },
+  toast: {
+    duration: `duration.base (${ms('motion.duration.base')}) in with ${px('motion.distance.enter')} travel; stays 6s, paused on hover or focus`,
+    kind: 'Easing',
+    easing: `${ease('standard')} in; easing.exit out`,
+    communicates: 'It worked, and it is reversible. The toast waits while you read it.',
+  },
+  card: {
+    duration: `duration.slow (${ms('motion.duration.slow')}) view transition; duration.base crossfade fallback`,
+    kind: 'Easing',
+    easing: ease('standard'),
+    communicates:
+      'The detail is the same photo, opened: image and title travel so you never lose your place.',
+  },
+  pull: {
+    duration: `spring.snappy (${ms('motion.spring.snappy')}) snap; spring.gentle (${ms('motion.spring.gentle')}) settle`,
+    kind: 'Spring',
+    easing: 'Rubber band at 0.5× the pointer; 56px threshold',
+    communicates: 'The list resists, then commits: past the line it snaps, refreshes and settles back.',
+  },
+};
+---
+
+<Base title="Lab" description="Six micro-interactions built only with Harbor tokens and components, each with a spec, slow motion and a reduced-motion design.">
+  <div class="container page-header">
+    <p class="eyebrow">Micro-interaction lab</p>
+    <h1>Motion, one interaction at a time</h1>
+    <p class="lede">
+      Six interactions built only with Harbor tokens and components. Each shows its spec, replays
+      on demand, runs at one fifth speed, and has a reduced-motion design you can preview. Every
+      animation moves only transform and opacity, and none of them shifts layout.
+    </p>
+  </div>
+  <div class="container grid">
+    <LikeTile spec={specs.like!} client:visible />
+    <ReorderTile spec={specs.reorder!} client:visible />
+    <SkeletonTile spec={specs.skeleton!} client:visible />
+    <ToastTile spec={specs.toast!} client:visible />
+    <CardTile spec={specs.card!} client:visible />
+    <PullTile spec={specs.pull!} client:visible />
+  </div>
+</Base>
+
+<style is:global>
+  /* Only the lab's named elements take part in view transitions; the page itself stays put. */
+  :root {
+    view-transition-name: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--lab-vt-duration, 320ms);
+    animation-timing-function: var(--hb-motion-easing-standard);
+  }
+</style>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
+    gap: var(--hb-space-5);
+  }
+</style>
