@@ -27,8 +27,9 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
-      - run: pnpm test:unit
-      - run: pnpm test:a11y
+      # One run of every Vitest project (infra, tokens, react, a11y) with coverage thresholds:
+      # react >= 90% statements, tokens 100%.
+      - run: pnpm test:coverage
       - run: pnpm build
       - run: pnpm size
       - name: Cache Playwright browsers

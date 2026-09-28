@@ -2,6 +2,17 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    coverage: {
+      provider: 'v8',
+      include: ['packages/react/src/**/*.{ts,tsx}', 'packages/tokens/src/**/*.ts'],
+      exclude: ['**/*.test.{ts,tsx}', '**/*.d.ts', '**/index.ts', 'packages/react/src/states.ts'],
+      reporter: ['text-summary', 'json-summary', 'html'],
+      reportsDirectory: 'coverage',
+      thresholds: {
+        'packages/react/src/**': { statements: 90, lines: 90 },
+        'packages/tokens/src/**': { statements: 100, lines: 100 },
+      },
+    },
     projects: [
       {
         test: {

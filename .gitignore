@@ -17,4 +17,3 @@ blob-report/
 # local sandbox marker
 .ai-jail
 .pnpm-store/
-.lighthouseci/
