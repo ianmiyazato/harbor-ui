@@ -11,3 +11,4 @@ export { selectStates } from './select/Select.states';
 export { TabsExample, tabsStates } from './tabs/Tabs.states';
 export { dialogStates } from './dialog/Dialog.states';
 export { tooltipStates } from './tooltip/Tooltip.states';
+export { ToastExample, toastStates } from './toast/Toast.states';
