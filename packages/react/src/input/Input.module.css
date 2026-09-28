@@ -1,0 +1,101 @@
+.field {
+  display: grid;
+  gap: var(--hb-space-1);
+  font-family: var(--hb-font-family-ui);
+}
+
+.label {
+  color: var(--hb-color-text-default);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  font-weight: var(--hb-font-weight-medium);
+}
+
+.input {
+  min-height: var(--hb-size-control-md);
+  padding-inline: var(--hb-space-3);
+  border: var(--hb-border-width-thin) solid var(--hb-color-border-strong);
+  border-radius: var(--hb-radius-md);
+  background-color: var(--hb-color-surface-raised);
+  color: var(--hb-color-text-default);
+  font: inherit;
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  transition-property: border-color, background-color;
+  transition-duration: var(--hb-motion-duration-fast);
+  transition-timing-function: var(--hb-motion-easing-standard);
+}
+
+.input::placeholder {
+  color: var(--hb-color-text-muted);
+}
+
+.input:hover:not(:disabled, :focus),
+.input[data-preview='hover'] {
+  border-color: var(--hb-color-text-muted);
+}
+
+.input:focus-visible,
+.input[data-preview='focus-visible'] {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+.field[data-invalid] .input {
+  border-color: var(--hb-color-border-danger);
+}
+
+.input:disabled {
+  background-color: var(--hb-color-surface-sunken);
+  cursor: not-allowed;
+  opacity: var(--hb-opacity-disabled);
+}
+
+.field[data-disabled] .label {
+  opacity: var(--hb-opacity-disabled);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--hb-space-3);
+}
+
+.hint,
+.count {
+  margin: 0;
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
+
+.count {
+  margin-inline-start: auto;
+  font-family: var(--hb-font-family-code);
+  font-variant-numeric: tabular-nums;
+}
+
+.count[data-at-limit] {
+  color: var(--hb-color-text-default);
+  font-weight: var(--hb-font-weight-semibold);
+}
+
+.errorRegion:empty {
+  display: none;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: var(--hb-space-1);
+  margin: 0;
+  color: var(--hb-color-text-danger);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
+
+.errorIcon {
+  flex: none;
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+}
