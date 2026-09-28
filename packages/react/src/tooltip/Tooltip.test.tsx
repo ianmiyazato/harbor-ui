@@ -31,12 +31,18 @@ describe('Tooltip', () => {
     expect(screen.getByRole('button', { name: 'Copy' })).toHaveAccessibleDescription('Copy link');
   });
 
-  it('shows on hover and hides when the pointer leaves', async () => {
+  it('shows on hover and hides when the pointer moves elsewhere', async () => {
     const user = userEvent.setup();
     render(<Example />);
     await user.hover(screen.getByRole('button', { name: 'Copy' }));
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    // Radix keeps a grace area so the pointer can reach the tooltip (WCAG 1.4.13 "hoverable");
+    // moving well outside it closes the tooltip. jsdom has no layout, so give explicit coordinates.
     await user.unhover(screen.getByRole('button', { name: 'Copy' }));
+    await user.pointer({
+      target: screen.getByRole('button', { name: 'Next' }),
+      coords: { clientX: 400, clientY: 400 },
+    });
     await waitFor(() => expect(screen.queryByRole('tooltip')).not.toBeInTheDocument());
   });
 
