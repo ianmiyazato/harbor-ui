@@ -85,21 +85,21 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-021 States row = static inert specimens; live demo is the island; facts computed and measured in e2e.
 - D-020 Full package 45.1 kB gz (Radix) > 35 kB target; kept Radix, CI enforces per-usage budgets; Button 0.64 kB.
 - D-019 Portalled content copies local theme/motion/timescale from its anchor when opening.
 - D-018 Loading-width: unit test asserts the mechanism; the pixel width assertion runs in Playwright (jsdom has no layout).
 - D-017 One states registry per component drives axe tests, docs and screenshots; `[data-preview]` shows pseudo-states live.
 - D-016 React 19.3 runtime = 68.6 kB gz (measured) > 60 kB lab budget; kept React, report runtime + lab code separately.
-- D-015 Durations re-declared under `[data-timescale]` so slow motion and reduced motion can be scoped to one tile.
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M4 #29 docs: components index + 12 pages (live island, static states row, scoped theme toggle, 3 measured a11y facts, generated props, snippet with extracted token list, do/don't); fix: disabled descriptions stay readable.
 - M4 #28 docs: Foundations (Color with generated contrast report, Type and space, Motion with replayable durations/curves and reduced lanes); zero React JS.
 - M4 #27 docs: layout shell, skip link, Light/Dark/High-contrast switcher (native radios, no-flash inline script, follows OS until chosen).
 - M4 #26 docs: Astro 5 static scaffold (React + MDX integrations), Playwright e2e against `astro preview`, CI runs e2e.
 - M3 #24 ci: size-limit gzip budgets per usage pattern in CI (Button 0.64 kB, full 45.1 kB). M3 complete.
 - M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
-- M3 #22 tooltip: Radix, focus/hover, Escape + hoverable (WCAG 1.4.13), aria-describedby, side-aware enter motion.
 
 ## Known gaps
 

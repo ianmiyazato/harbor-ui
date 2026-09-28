@@ -25,3 +25,4 @@
 - M4 #26 docs: Astro 5 static scaffold (React + MDX integrations), Playwright e2e against `astro preview`, CI runs e2e.
 - M4 #27 docs: layout shell, skip link, Light/Dark/High-contrast switcher (native radios, no-flash inline script, follows OS until chosen).
 - M4 #28 docs: Foundations (Color with generated contrast report, Type and space, Motion with replayable durations/curves and reduced lanes); zero React JS.
+- M4 #29 docs: components index + 12 pages (live island, static states row, scoped theme toggle, 3 measured a11y facts, generated props, snippet with extracted token list, do/don't); fix: disabled descriptions stay readable.
