@@ -102,4 +102,10 @@ export const motion: Token[] = [
     noMotion(0),
     'One sweep of the skeleton shimmer. A loop period, not a transition, so it sits outside the 80–600 ms range.',
   ]),
+  make('loop', 'ms')([
+    'spin',
+    900,
+    noMotion(0),
+    'One turn of the loading spinner. Under reduced motion the spinner stops and shows a static dotted ring.',
+  ]),
 ];
