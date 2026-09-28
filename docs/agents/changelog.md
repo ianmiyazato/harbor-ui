@@ -8,3 +8,4 @@
 - M1 #7 tokens: motion (6 durations, 3 easings, 3 springs → CSS linear(), distances, scales, shimmer loop), each with a reduced counterpart.
 - M1 #8 tokens: build emits tokens.css (themes, OS prefs, timescale, reduced motion), tokens.json, typed index.js/d.ts, contrast report; 205 tokens.
 - M2 #9 react: package scaffold (Vite lib, preserveModules, CSS Modules, jsdom tests), useReducedMotion.
+- M2 #10 react: stylelint token-only rules (no hex/rgb/named colors, px/rem/ms/s, palette vars, raw weights/z/easing), tested with fixtures.
