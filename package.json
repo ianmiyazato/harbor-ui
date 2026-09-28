@@ -21,6 +21,8 @@
     "verify:prod": "BASE_URL=https://harbor-ui-docs.vercel.app playwright test --project=e2e tests/e2e/site.spec.ts tests/e2e/theme.spec.ts",
     "test:visual": "playwright test --project=visual",
     "check": "pnpm lint && pnpm typecheck && pnpm test:unit && pnpm test:a11y && pnpm build",
+    "lighthouse": "lhci autorun",
+    "test:coverage": "vitest run --coverage",
     "size": "pnpm --filter @ianmiyazato/harbor-react size",
     "format": "prettier --write .",
     "deploy:prod": "vercel deploy --prod"
