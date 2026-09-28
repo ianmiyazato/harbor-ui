@@ -57,7 +57,7 @@ const overlays: Record<string, (page: Page) => Promise<void>> = {
   },
   toast: async (page) => {
     await page.locator('[data-demo]').getByRole('button', { name: 'Archive message' }).click();
-    await expect(page.locator('[data-demo]').getByRole('listitem')).toBeVisible();
+    await expect(page.locator('[data-demo] li[data-state="open"]')).toBeVisible();
   },
 };
 
