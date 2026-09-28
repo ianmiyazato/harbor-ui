@@ -1,0 +1,160 @@
+.field {
+  display: grid;
+  gap: var(--hb-space-1);
+  font-family: var(--hb-font-family-ui);
+}
+
+.label {
+  color: var(--hb-color-text-default);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  font-weight: var(--hb-font-weight-medium);
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hb-space-2);
+  min-height: var(--hb-size-control-md);
+  padding-inline: var(--hb-space-3) var(--hb-space-2);
+  border: var(--hb-border-width-thin) solid var(--hb-color-border-strong);
+  border-radius: var(--hb-radius-md);
+  background-color: var(--hb-color-surface-raised);
+  color: var(--hb-color-text-default);
+  font: inherit;
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  text-align: start;
+  cursor: pointer;
+  transition-property: border-color;
+  transition-duration: var(--hb-motion-duration-fast);
+  transition-timing-function: var(--hb-motion-easing-standard);
+}
+
+.trigger[data-placeholder] {
+  color: var(--hb-color-text-muted);
+}
+
+.trigger:hover:not(:disabled),
+.trigger[data-preview='hover'] {
+  border-color: var(--hb-color-text-muted);
+}
+
+.trigger:focus-visible,
+.trigger[data-preview='focus-visible'] {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+.field[data-invalid] .trigger {
+  border-color: var(--hb-color-border-danger);
+}
+
+.trigger:disabled {
+  background-color: var(--hb-color-surface-sunken);
+  cursor: not-allowed;
+  opacity: var(--hb-opacity-disabled);
+}
+
+.icon {
+  display: inline-flex;
+  color: var(--hb-color-text-muted);
+  transition: transform var(--hb-motion-duration-fast) var(--hb-motion-easing-standard);
+}
+
+.icon > svg {
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+}
+
+.trigger[data-state='open'] .icon {
+  transform: rotate(180deg);
+}
+
+.content {
+  z-index: var(--hb-z-popover);
+  min-width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  overflow: hidden;
+  border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+  border-radius: var(--hb-radius-lg);
+  background-color: var(--hb-color-surface-overlay);
+  color: var(--hb-color-text-default);
+  box-shadow: var(--hb-elevation-2);
+  font-family: var(--hb-font-family-ui);
+  transform-origin: var(--radix-select-content-transform-origin);
+}
+
+/* Menus drop in from the trigger: a short fade plus a small travel that reduced motion removes. */
+.content[data-state='open'] {
+  animation: menu-in var(--hb-motion-duration-fast) var(--hb-motion-easing-standard);
+}
+
+.viewport {
+  padding: var(--hb-space-1);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hb-space-3);
+  min-height: var(--hb-size-control-sm);
+  padding-inline: var(--hb-space-3) var(--hb-space-2);
+  border-radius: var(--hb-radius-sm);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.item[data-highlighted] {
+  background-color: var(--hb-color-action-ghost-hover);
+}
+
+.item[data-state='checked'] {
+  font-weight: var(--hb-font-weight-semibold);
+}
+
+.item[data-disabled] {
+  cursor: not-allowed;
+  opacity: var(--hb-opacity-disabled);
+}
+
+.indicator {
+  display: inline-flex;
+  color: var(--hb-color-action-primary);
+}
+
+.indicator > svg {
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+}
+
+.hint {
+  margin: 0;
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
+
+.errorRegion:empty {
+  display: none;
+}
+
+.error {
+  margin: 0;
+  color: var(--hb-color-text-danger);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--hb-motion-distance-enter) * -0.5));
+  }
+}
