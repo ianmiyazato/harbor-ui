@@ -29,3 +29,4 @@
 - M4 #30 docs: home (pitch, stats from data, 3 live tiles), principles (5, each with repo evidence), JS budget + 390px overflow e2e checks.
 - M4 #31 close: Lighthouse on 11 pages (perf 99–100, a11y/BP/SEO 100) recorded in docs/perf/lighthouse-m4.md. M4 complete.
 - M4 deploy #1: https://harbor-ui-docs.vercel.app (v0.4.0, 8102715); `pnpm verify:prod` passes on production (19 pages, 0 console errors, 0 serious axe).
+- M5 #33 lab: 6 interactions (like, reorder, skeleton, toast, card→detail, pull) with spec/replay/×5/reduced; compositor-only + CLS 0 verified in e2e; frame timing in docs/perf/lab.md; fix(checkbox) hit target.
