@@ -13,6 +13,9 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
+  // Baselines are shared between local Linux (WSL) and CI Linux; allow sub-pixel antialiasing noise.
+  snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',
+  expect: { toHaveScreenshot: { maxDiffPixelRatio: 0.01, animations: 'disabled', caret: 'hide' } },
   use: {
     baseURL: remote ?? 'http://localhost:4321',
     trace: 'retain-on-failure',
