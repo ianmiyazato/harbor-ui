@@ -6,4 +6,6 @@ export { IconButton } from './icon-button';
 export type { IconButtonProps } from './icon-button';
 export { Input } from './input';
 export type { InputProps } from './input';
+export { Switch } from './switch';
+export type { SwitchProps } from './switch';
 export { useReducedMotion } from './internal/useReducedMotion';
