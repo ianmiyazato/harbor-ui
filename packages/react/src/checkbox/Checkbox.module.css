@@ -38,6 +38,8 @@
   border-radius: var(--hb-radius-sm);
   background-color: var(--hb-color-surface-raised);
   color: var(--hb-color-control-thumb);
+  /* Decorative: the native input underneath receives every pointer event. */
+  pointer-events: none;
   transition-property: background-color, border-color, transform;
   transition-duration: var(--hb-motion-duration-instant);
   transition-timing-function: var(--hb-motion-easing-standard);
