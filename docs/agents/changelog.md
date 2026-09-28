@@ -21,3 +21,4 @@
 - M3 #21 dialog: Radix modal, title required by type, focus trap/return, Esc, scroll lock, token-driven enter/exit, inherits local theme.
 - M3 #22 tooltip: Radix, focus/hover, Escape + hoverable (WCAG 1.4.13), aria-describedby, side-aware enter motion.
 - M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
+- M3 #24 ci: size-limit gzip budgets per usage pattern in CI (Button 0.64 kB, full 45.1 kB). M3 complete.
