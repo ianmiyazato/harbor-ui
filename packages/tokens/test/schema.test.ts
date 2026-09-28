@@ -66,7 +66,10 @@ describe('token schema', () => {
     for (const [group, names] of groups) {
       const isScale = names.length >= 11;
       if (isScale) {
-        expect(names.some((n) => referenced.has(n)), `${group} scale is unused`).toBe(true);
+        expect(
+          names.some((n) => referenced.has(n)),
+          `${group} scale is unused`,
+        ).toBe(true);
       } else {
         for (const n of names) expect(referenced.has(n), `${n} is unused`).toBe(true);
       }
