@@ -105,6 +105,26 @@ describe('Dialog', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
+  it('inherits the local theme of its trigger, even though it renders in a portal', async () => {
+    const user = userEvent.setup();
+    render(
+      <div data-theme="dark">
+        <Example />
+      </div>,
+    );
+    await user.click(screen.getByRole('button', { name: 'Delete project' }));
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-theme', 'dark');
+  });
+
+  it('renders no empty body or footer, defaults to the medium size and has no dangling description', () => {
+    render(<Dialog title="Rename" defaultOpen />);
+    const dialog = screen.getByRole('dialog', { name: 'Rename' });
+    expect(dialog).toHaveAttribute('data-size', 'md');
+    expect(dialog).not.toHaveAttribute('aria-describedby');
+    // Title and close button only.
+    expect(dialog.children).toHaveLength(2);
+  });
+
   it('requires a title at the type level', () => {
     const typeOnly = () => (
       // @ts-expect-error every dialog needs an accessible title
