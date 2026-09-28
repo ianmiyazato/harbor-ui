@@ -16,3 +16,9 @@
 - M2 #15 switch: button role=switch with <label>, spring thumb (CSS linear()), controlled/uncontrolled, 42×24 target.
 - M2 #16 badge: 5 tones (each fg/bg pair in the contrast matrix), sm/md, decorative dot, outlined in high contrast.
 - M2 #17 skeleton: text/rect/circle, explicit final size, multi-line text, transform-only shimmer, static under reduced motion.
+- M3 #19 select: Radix Select with label/hint/error, keyboard + typeahead, portal inherits local theme/motion/timescale.
+- M3 #20 tabs: Tabs/TabList/Tab/TabPanel on Radix, automatic activation, transform-only sliding indicator with no-JS fallback.
+- M3 #21 dialog: Radix modal, title required by type, focus trap/return, Esc, scroll lock, token-driven enter/exit, inherits local theme.
+- M3 #22 tooltip: Radix, focus/hover, Escape + hoverable (WCAG 1.4.13), aria-describedby, side-aware enter motion.
+- M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
+- M3 #24 ci: size-limit gzip budgets per usage pattern in CI (Button 0.64 kB, full 45.1 kB). M3 complete.

@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Full package: all 12 components, Radix included (spec target 35 kB, see D-020)",
+    "path": "dist/index.js",
+    "import": "*",
+    "gzip": true,
+    "limit": "46 kB"
+  },
+  {
+    "name": "Button",
+    "path": "dist/index.js",
+    "import": "{ Button }",
+    "gzip": true,
+    "limit": "4 kB"
+  },
+  {
+    "name": "Core form set: Button, IconButton, Input, Checkbox, Switch, Badge, Skeleton",
+    "path": "dist/index.js",
+    "import": "{ Button, IconButton, Input, Checkbox, Switch, Badge, Skeleton }",
+    "gzip": true,
+    "limit": "4 kB"
+  },
+  {
+    "name": "Select",
+    "path": "dist/index.js",
+    "import": "{ Select }",
+    "gzip": true,
+    "limit": "32 kB"
+  },
+  {
+    "name": "Tabs",
+    "path": "dist/index.js",
+    "import": "{ Tabs, TabList, Tab, TabPanel }",
+    "gzip": true,
+    "limit": "10.5 kB"
+  },
+  {
+    "name": "Dialog",
+    "path": "dist/index.js",
+    "import": "{ Dialog, DialogClose }",
+    "gzip": true,
+    "limit": "15 kB"
+  },
+  {
+    "name": "Tooltip",
+    "path": "dist/index.js",
+    "import": "{ Tooltip }",
+    "gzip": true,
+    "limit": "20 kB"
+  },
+  {
+    "name": "Toast",
+    "path": "dist/index.js",
+    "import": "{ ToastProvider, useToast }",
+    "gzip": true,
+    "limit": "14 kB"
+  },
+  {
+    "name": "styles.css (every component)",
+    "path": "dist/styles.css",
+    "gzip": true,
+    "limit": "5 kB"
+  }
+]
