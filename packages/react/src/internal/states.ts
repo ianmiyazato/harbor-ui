@@ -12,7 +12,8 @@ export type StateName =
   | 'error'
   | 'checked'
   | 'indeterminate'
-  | 'open';
+  | 'open'
+  | 'selected';
 
 /**
  * Pseudo-class states cannot be triggered from props, so component CSS also matches
