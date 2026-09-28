@@ -85,21 +85,21 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-016 React 19.3 runtime = 68.6 kB gz (measured) > 60 kB lab budget; kept React, report runtime + lab code separately.
 - D-015 Durations re-declared under `[data-timescale]` so slow motion and reduced motion can be scoped to one tile.
 - D-014 Added `duration.crossfade` (200 ms, lab spec) and `loop.shimmer` (loop period, exempt from 80–600 ms).
 - D-013 Focus ring is blue, not brand teal, so focus never reads as selection.
 - D-012 Semantic tokens reference `{palette.*}` primitives; orphans = unused palette groups or dangling refs.
 - D-010 Vercel project created unlinked: the Vercel GitHub App is not installed for this repo.
-- D-009 Turbo's injected agent-guidance block is disabled (keeps this index under 150 lines).
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M2 #9 react: package scaffold (Vite lib, preserveModules, CSS Modules, jsdom tests), useReducedMotion.
 - M1 #8 tokens: build emits tokens.css (themes, OS prefs, timescale, reduced motion), tokens.json, typed index.js/d.ts, contrast report; 205 tokens.
 - M1 #7 tokens: motion (6 durations, 3 easings, 3 springs → CSS linear(), distances, scales, shimmer loop), each with a reduced counterpart.
 - M1 #6 tokens: contrast matrix, 39 pairs × 3 themes = 117 checks, all passing; writes dist/contrast-report.json.
 - M1 #5 tokens: palette (OKLCH scales), 44 semantic colors × 3 themes, type, space, radius, size, elevation; schema tests.
 - M0 bootstrap: repository, license, AGENTS.md.
-- M0 #2 close M0: toolchain record, Vercel project, known gaps.
 
 ## Known gaps
 
