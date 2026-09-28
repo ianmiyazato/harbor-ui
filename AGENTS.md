@@ -86,24 +86,25 @@ Built production deploys: **2 / 5** · previews: 0 · projects: 1 · functions: 
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-026 npm publish skipped: no NPM_TOKEN; packages versioned 1.0.0 with Changesets.
 - D-025 Visual baselines shared local/CI Linux, 1% tolerance, reduced motion for determinism.
 - D-024 Lab JS 95.4 kB gz (65.9 runtime + 29.5 lab); 0 long frames unthrottled, 1 at 4× (VT capture).
 - D-023 Deploys via Vercel API gitSource (public repo); domain harbor-ui-docs.vercel.app; protection = previews only.
 - D-022 Lighthouse via Node API + Playwright Chromium (chrome-launcher can't run under WSL sandbox).
 - D-021 States row = static inert specimens; live demo is the island; facts computed and measured in e2e.
-- D-020 Full package 45.1 kB gz (Radix) > 35 kB target; kept Radix, CI enforces per-usage budgets; Button 0.64 kB.
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M7 #38 release: changesets (both packages 1.0.0), README with real numbers (519 tests, 97.74%/100% coverage, CI Lighthouse 100s, Button 0.64 kB), screenshots; npm publish skipped (no NPM_TOKEN).
 - M6 #36 quality: 54 visual baselines (PRs into main), coverage gates (react 97.74% / tokens 100% statements), Lighthouse CI + medians 100/100/99, Stryker 87.76%, 5 ADRs, font preload (lab CLS 0.031 → 0).
 - M5 deploy #2: /lab live (v0.5.0, 8cf7f25); production verified with Playwright: 43 checks (20 pages + lab behaviors) pass.
 - M5 #33 lab: 6 interactions (like, reorder, skeleton, toast, card→detail, pull) with spec/replay/×5/reduced; compositor-only + CLS 0 verified in e2e; frame timing in docs/perf/lab.md; fix(checkbox) hit target.
 - M4 deploy #1: https://harbor-ui-docs.vercel.app (v0.4.0, 8102715); `pnpm verify:prod` passes on production (19 pages, 0 console errors, 0 serious axe).
 - M4 #31 close: Lighthouse on 11 pages (perf 99–100, a11y/BP/SEO 100) recorded in docs/perf/lighthouse-m4.md. M4 complete.
-- M4 #30 docs: home (pitch, stats from data, 3 live tiles), principles (5, each with repo evidence), JS budget + 390px overflow e2e checks.
 
 ## Known gaps
 
+- **npm not published** (D-026): no `NPM_TOKEN`. Fix: add the secret, then `pnpm changeset publish` with `NPM_CONFIG_PROVENANCE=true`.
 - **Full-package size 45.1 kB gz vs 35 kB target** (D-020). Per-usage budgets are enforced instead; Button alone is 0.64 kB.
 - **Lab JS budget** (D-016, D-024): `/lab` loads 95.4 kB gz (65.9 kB shared React/Astro runtime + 29.5 kB lab code) vs a 60 kB target.
 - **One 66.7 ms frame at 4× CPU throttling** (card view-transition capture); 0 long frames unthrottled. See docs/perf/lab.md.
