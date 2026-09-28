@@ -16,3 +16,4 @@ blob-report/
 !.env.example
 # local sandbox marker
 .ai-jail
+.pnpm-store/
