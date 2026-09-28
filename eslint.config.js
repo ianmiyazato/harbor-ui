@@ -17,6 +17,7 @@ export default tseslint.config(
       'playwright-report/**',
       '.lighthouseci/**',
       'reports/**',
+      'apps/docs/.astro/**',
     ],
   },
   js.configs.recommended,
