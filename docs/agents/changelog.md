@@ -33,3 +33,4 @@
 - M5 deploy #2: /lab live (v0.5.0, 8cf7f25); production verified with Playwright: 43 checks (20 pages + lab behaviors) pass.
 - M6 #36 quality: 54 visual baselines (PRs into main), coverage gates (react 97.74% / tokens 100% statements), Lighthouse CI + medians 100/100/99, Stryker 87.76%, 5 ADRs, font preload (lab CLS 0.031 → 0).
 - M7 #38 release: changesets (both packages 1.0.0), README with real numbers (519 tests, 97.74%/100% coverage, CI Lighthouse 100s, Button 0.64 kB), screenshots; npm publish skipped (no NPM_TOKEN).
+- M7 deploy #3 + release: v1.0.0 live (86d074d), 154/154 e2e pass on production; GitHub release with 3 screenshots; docs/CALL-BRIEF.md written from real numbers. M7 complete.
