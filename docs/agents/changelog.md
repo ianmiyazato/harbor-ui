@@ -17,3 +17,4 @@
 - M2 #16 badge: 5 tones (each fg/bg pair in the contrast matrix), sm/md, decorative dot, outlined in high contrast.
 - M2 #17 skeleton: text/rect/circle, explicit final size, multi-line text, transform-only shimmer, static under reduced motion.
 - M3 #19 select: Radix Select with label/hint/error, keyboard + typeahead, portal inherits local theme/motion/timescale.
+- M3 #20 tabs: Tabs/TabList/Tab/TabPanel on Radix, automatic activation, transform-only sliding indicator with no-JS fallback.
