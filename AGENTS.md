@@ -85,6 +85,8 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-013 Focus ring is blue, not brand teal, so focus never reads as selection.
+- D-012 Semantic tokens reference `{palette.*}` primitives; orphans = unused palette groups or dangling refs.
 - D-010 Vercel project created unlinked: the Vercel GitHub App is not installed for this repo.
 - D-009 Turbo's injected agent-guidance block is disabled (keeps this index under 150 lines).
 - D-008 Deploys are opt-in: `main` only, `[deploy]` in the merge commit, and a diff under `apps/docs` or `packages`.
@@ -92,12 +94,16 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M1 #5 tokens: palette (OKLCH scales), 44 semantic colors × 3 themes, type, space, radius, size, elevation; schema tests.
 - M0 bootstrap: repository, license, AGENTS.md.
 - M0 #2 close M0: toolchain record, Vercel project, known gaps.
 - M0 #1 workspace (pnpm, turbo, TS, ESLint, Vitest), CI `check` job, Vercel config + tested ignore step.
 
 ## Known gaps
 
+- **`.pnpm-store` in early history.** A sandbox-local pnpm store was committed by mistake in the M0 `ci:` commit
+  and deleted in `chore: check formatting in lint and ignore local pnpm store`. The files no longer exist in the tree,
+  but they remain in git history (~55 MB pack). Rewriting published history was not done autonomously; owner decision.
 - **Vercel Git link missing.** The Vercel GitHub App is not installed on `ianmiyazato/harbor-ui`, so
   `main` merges cannot trigger builds. Fix: install https://github.com/apps/vercel for this repo, then
   Vercel → harbor-ui → Settings → Git → Connect `ianmiyazato/harbor-ui`. Until then deploys use the fallback
