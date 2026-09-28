@@ -9,4 +9,5 @@ export const site = {
 export const nav: { href: string; label: string }[] = [
   { href: '/foundations', label: 'Foundations' },
   { href: '/components', label: 'Components' },
+  { href: '/principles', label: 'Principles' },
 ];
