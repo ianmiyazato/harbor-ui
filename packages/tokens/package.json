@@ -1,0 +1,31 @@
+{
+  "name": "@ianmiyazato/harbor-tokens",
+  "version": "0.0.0",
+  "description": "Harbor UI design tokens: semantic color, type, space, radius, elevation and motion.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./contrast-report.json": "./dist/contrast-report.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianmiyazato/harbor-ui.git",
+    "directory": "packages/tokens"
+  },
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "typecheck": "tsc --noEmit"
+  }
+}
