@@ -14,3 +14,4 @@
 - M2 #13 input: label, hint, polite error region, character count (visual n/max + one status at the limit), controlled/uncontrolled.
 - M2 #14 checkbox: native input over a token-styled box, checked/indeterminate/controlled/uncontrolled, description + error, 24px row target.
 - M2 #15 switch: button role=switch with <label>, spring thumb (CSS linear()), controlled/uncontrolled, 42×24 target.
+- M2 #16 badge: 5 tones (each fg/bg pair in the contrast matrix), sm/md, decorative dot, outlined in high contrast.
