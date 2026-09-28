@@ -68,7 +68,7 @@ Rebase merges keep the test → feat commit pairs visible. Details: [`docs/agent
 
 - [x] M0 Repo, branches, protection, CI, AGENTS.md, Vercel project configured (not deployed)
 - [x] M1 Tokens: schema, contrast matrix, motion and build-output tests
-- [ ] M2 Button, IconButton, Input, Checkbox, Switch, Badge, Skeleton
+- [x] M2 Button, IconButton, Input, Checkbox, Switch, Badge, Skeleton
 - [ ] M3 Select, Tabs, Dialog, Tooltip, Toast, size-limit
 - [ ] M4 Docs site: Home, Foundations, Components, Principles — deploy #1
 - [ ] M5 Micro-interaction lab (6 interactions) — deploy #2
@@ -94,12 +94,12 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M2 #17 skeleton: text/rect/circle, explicit final size, multi-line text, transform-only shimmer, static under reduced motion.
 - M2 #16 badge: 5 tones (each fg/bg pair in the contrast matrix), sm/md, decorative dot, outlined in high contrast.
 - M2 #15 switch: button role=switch with <label>, spring thumb (CSS linear()), controlled/uncontrolled, 42×24 target.
 - M2 #14 checkbox: native input over a token-styled box, checked/indeterminate/controlled/uncontrolled, description + error, 24px row target.
 - M2 #13 input: label, hint, polite error region, character count (visual n/max + one status at the limit), controlled/uncontrolled.
 - M2 #12 icon-button: square Button, `aria-label` required at the type level (proven by @ts-expect-error in typecheck), axe on 24 combos.
-- M2 #11 button: 4 variants × 3 sizes, loading without layout shift, reduced-motion spinner, states registry (`@ianmiyazato/harbor-react/states`), axe on 24 variant×state combos.
 
 ## Known gaps
 
