@@ -85,21 +85,21 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-018 Loading-width: unit test asserts the mechanism; the pixel width assertion runs in Playwright (jsdom has no layout).
+- D-017 One states registry per component drives axe tests, docs and screenshots; `[data-preview]` shows pseudo-states live.
 - D-016 React 19.3 runtime = 68.6 kB gz (measured) > 60 kB lab budget; kept React, report runtime + lab code separately.
 - D-015 Durations re-declared under `[data-timescale]` so slow motion and reduced motion can be scoped to one tile.
 - D-014 Added `duration.crossfade` (200 ms, lab spec) and `loop.shimmer` (loop period, exempt from 80–600 ms).
 - D-013 Focus ring is blue, not brand teal, so focus never reads as selection.
-- D-012 Semantic tokens reference `{palette.*}` primitives; orphans = unused palette groups or dangling refs.
-- D-010 Vercel project created unlinked: the Vercel GitHub App is not installed for this repo.
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M2 #11 button: 4 variants × 3 sizes, loading without layout shift, reduced-motion spinner, states registry (`@ianmiyazato/harbor-react/states`), axe on 24 variant×state combos.
 - M2 #10 react: stylelint token-only rules (no hex/rgb/named colors, px/rem/ms/s, palette vars, raw weights/z/easing), tested with fixtures.
 - M2 #9 react: package scaffold (Vite lib, preserveModules, CSS Modules, jsdom tests), useReducedMotion.
 - M1 #8 tokens: build emits tokens.css (themes, OS prefs, timescale, reduced motion), tokens.json, typed index.js/d.ts, contrast report; 205 tokens.
 - M1 #7 tokens: motion (6 durations, 3 easings, 3 springs → CSS linear(), distances, scales, shimmer loop), each with a reduced counterpart.
 - M1 #6 tokens: contrast matrix, 39 pairs × 3 themes = 117 checks, all passing; writes dist/contrast-report.json.
-- M1 #5 tokens: palette (OKLCH scales), 44 semantic colors × 3 themes, type, space, radius, size, elevation; schema tests.
 
 ## Known gaps
 

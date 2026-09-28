@@ -9,3 +9,4 @@
 - M1 #8 tokens: build emits tokens.css (themes, OS prefs, timescale, reduced motion), tokens.json, typed index.js/d.ts, contrast report; 205 tokens.
 - M2 #9 react: package scaffold (Vite lib, preserveModules, CSS Modules, jsdom tests), useReducedMotion.
 - M2 #10 react: stylelint token-only rules (no hex/rgb/named colors, px/rem/ms/s, palette vars, raw weights/z/easing), tested with fixtures.
+- M2 #11 button: 4 variants × 3 sizes, loading without layout shift, reduced-motion spinner, states registry (`@ianmiyazato/harbor-react/states`), axe on 24 variant×state combos.
