@@ -85,21 +85,21 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Decision log (latest; full log in [`docs/agents/decision-log.md`](docs/agents/decision-log.md))
 
+- D-019 Portalled content copies local theme/motion/timescale from its anchor when opening.
 - D-018 Loading-width: unit test asserts the mechanism; the pixel width assertion runs in Playwright (jsdom has no layout).
 - D-017 One states registry per component drives axe tests, docs and screenshots; `[data-preview]` shows pseudo-states live.
 - D-016 React 19.3 runtime = 68.6 kB gz (measured) > 60 kB lab budget; kept React, report runtime + lab code separately.
 - D-015 Durations re-declared under `[data-timescale]` so slow motion and reduced motion can be scoped to one tile.
 - D-014 Added `duration.crossfade` (200 ms, lab spec) and `loop.shimmer` (loop period, exempt from 80–600 ms).
-- D-013 Focus ring is blue, not brand teal, so focus never reads as selection.
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M3 #19 select: Radix Select with label/hint/error, keyboard + typeahead, portal inherits local theme/motion/timescale.
 - M2 #17 skeleton: text/rect/circle, explicit final size, multi-line text, transform-only shimmer, static under reduced motion.
 - M2 #16 badge: 5 tones (each fg/bg pair in the contrast matrix), sm/md, decorative dot, outlined in high contrast.
 - M2 #15 switch: button role=switch with <label>, spring thumb (CSS linear()), controlled/uncontrolled, 42×24 target.
 - M2 #14 checkbox: native input over a token-styled box, checked/indeterminate/controlled/uncontrolled, description + error, 24px row target.
 - M2 #13 input: label, hint, polite error region, character count (visual n/max + one status at the limit), controlled/uncontrolled.
-- M2 #12 icon-button: square Button, `aria-label` required at the type level (proven by @ts-expect-error in typecheck), axe on 24 combos.
 
 ## Known gaps
 
