@@ -19,10 +19,26 @@ export default defineConfig({
         },
       },
       {
+        extends: './packages/react/vite.config.ts',
+        test: {
+          name: 'react',
+          root: 'packages/react',
+          include: ['src/**/*.test.{ts,tsx}', 'test/**/*.test.ts'],
+          exclude: ['src/**/*.a11y.test.tsx'],
+          environment: 'jsdom',
+          setupFiles: ['test/setup.ts'],
+          css: { include: /.+/, modules: { classNameStrategy: 'non-scoped' } },
+        },
+      },
+      {
+        extends: './packages/react/vite.config.ts',
         test: {
           name: 'a11y',
-          include: ['packages/**/src/**/*.a11y.test.tsx'],
+          root: 'packages/react',
+          include: ['src/**/*.a11y.test.tsx'],
           environment: 'jsdom',
+          setupFiles: ['test/setup.ts'],
+          css: { include: /.+/, modules: { classNameStrategy: 'non-scoped' } },
         },
       },
     ],
