@@ -94,12 +94,12 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
 - M3 #22 tooltip: Radix, focus/hover, Escape + hoverable (WCAG 1.4.13), aria-describedby, side-aware enter motion.
 - M3 #21 dialog: Radix modal, title required by type, focus trap/return, Esc, scroll lock, token-driven enter/exit, inherits local theme.
 - M3 #20 tabs: Tabs/TabList/Tab/TabPanel on Radix, automatic activation, transform-only sliding indicator with no-JS fallback.
 - M3 #19 select: Radix Select with label/hint/error, keyboard + typeahead, portal inherits local theme/motion/timescale.
 - M2 #17 skeleton: text/rect/circle, explicit final size, multi-line text, transform-only shimmer, static under reduced motion.
-- M2 #16 badge: 5 tones (each fg/bg pair in the contrast matrix), sm/md, decorative dot, outlined in high contrast.
 
 ## Known gaps
 
