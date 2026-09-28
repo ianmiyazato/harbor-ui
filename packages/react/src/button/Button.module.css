@@ -1,0 +1,170 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--hb-size-control-md);
+  padding-inline: var(--hb-space-4);
+  border: var(--hb-border-width-thin) solid transparent;
+  border-radius: var(--hb-radius-md);
+  font-family: var(--hb-font-family-ui);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  font-weight: var(--hb-font-weight-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: background-color, border-color, color, transform;
+  transition-duration: var(--hb-motion-duration-fast);
+  transition-timing-function: var(--hb-motion-easing-standard);
+}
+
+.content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hb-space-2);
+}
+
+.content > svg {
+  flex: none;
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+}
+
+/* Sizes */
+.button[data-size='sm'] {
+  min-height: var(--hb-size-control-sm);
+  padding-inline: var(--hb-space-3);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
+
+.button[data-size='lg'] {
+  min-height: var(--hb-size-control-lg);
+  padding-inline: var(--hb-space-5);
+  font-size: var(--hb-font-size-base);
+  line-height: var(--hb-font-leading-base);
+}
+
+/* Variants: every state maps to a named semantic token */
+.button[data-variant='primary'] {
+  background-color: var(--hb-color-action-primary);
+  color: var(--hb-color-text-on-action);
+}
+
+.button[data-variant='primary']:hover:not(:disabled, [data-loading]),
+.button[data-variant='primary'][data-preview='hover'] {
+  background-color: var(--hb-color-action-primary-hover);
+}
+
+.button[data-variant='primary']:active:not(:disabled, [data-loading]),
+.button[data-variant='primary'][data-preview='active'] {
+  background-color: var(--hb-color-action-primary-active);
+}
+
+.button[data-variant='secondary'] {
+  background-color: var(--hb-color-action-secondary);
+  border-color: var(--hb-color-border-default);
+  color: var(--hb-color-text-default);
+}
+
+.button[data-variant='secondary']:hover:not(:disabled, [data-loading]),
+.button[data-variant='secondary'][data-preview='hover'] {
+  background-color: var(--hb-color-action-secondary-hover);
+}
+
+.button[data-variant='secondary']:active:not(:disabled, [data-loading]),
+.button[data-variant='secondary'][data-preview='active'] {
+  background-color: var(--hb-color-action-secondary-active);
+}
+
+.button[data-variant='ghost'] {
+  background-color: transparent;
+  color: var(--hb-color-text-default);
+}
+
+.button[data-variant='ghost']:hover:not(:disabled, [data-loading]),
+.button[data-variant='ghost'][data-preview='hover'] {
+  background-color: var(--hb-color-action-ghost-hover);
+}
+
+.button[data-variant='ghost']:active:not(:disabled, [data-loading]),
+.button[data-variant='ghost'][data-preview='active'] {
+  background-color: var(--hb-color-action-ghost-active);
+}
+
+.button[data-variant='danger'] {
+  background-color: var(--hb-color-action-danger);
+  color: var(--hb-color-text-on-action);
+}
+
+.button[data-variant='danger']:hover:not(:disabled, [data-loading]),
+.button[data-variant='danger'][data-preview='hover'] {
+  background-color: var(--hb-color-action-danger-hover);
+}
+
+.button[data-variant='danger']:active:not(:disabled, [data-loading]),
+.button[data-variant='danger'][data-preview='active'] {
+  background-color: var(--hb-color-action-danger-active);
+}
+
+/* Press: a small scale on the compositor. Reduced motion maps the scale token to 1. */
+.button:active:not(:disabled, [data-loading]),
+.button[data-preview='active'] {
+  transform: scale(var(--hb-motion-scale-press));
+}
+
+.button:focus-visible,
+.button[data-preview='focus-visible'] {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: var(--hb-opacity-disabled);
+}
+
+/* Loading: the label keeps sizing the button, the spinner overlays it. No layout shift. */
+.button[data-loading] {
+  cursor: progress;
+}
+
+.button[data-loading] .content {
+  opacity: 0;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+  margin: auto;
+  border: var(--hb-border-width-thick) solid currentcolor;
+  border-inline-end-color: transparent;
+  border-radius: var(--hb-radius-full);
+  animation: spin var(--hb-motion-loop-spin) linear infinite;
+}
+
+/* Reduced motion: the spinner stops and becomes a static dotted ring. */
+.button[data-motion='reduced'] .spinner,
+:global([data-motion='reduced']) .spinner {
+  border-style: dotted;
+  border-inline-end-color: currentcolor;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    border-style: dotted;
+    border-inline-end-color: currentcolor;
+    animation: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
