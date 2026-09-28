@@ -103,26 +103,59 @@ for (const c of components) {
 }
 
 async function expectDemoReachable(page: Page) {
-  const total = await page.evaluate(() => {
-    const selector =
-      'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])';
-    const els = [...document.querySelectorAll<HTMLElement>(`[data-demo] :is(${selector})`)].filter(
-      (el) => !el.closest('[inert], [aria-hidden="true"]') && el.offsetParent !== null,
-    );
-    els.forEach((el, i) => (el.dataset.kb = String(i)));
-    return els.length;
-  });
-  expect(total).toBeGreaterThan(0);
+  // Islands hydrate on visibility; controls may also be disabled while a demo loads.
+  await page.waitForFunction(() =>
+    [...document.querySelectorAll('[data-demo] astro-island')].every((i) => !i.hasAttribute('ssr')),
+  );
+  const collect = () =>
+    page.evaluate(() => {
+      const els = [...document.querySelectorAll<HTMLElement>('[data-demo] *')].filter(
+        (el) =>
+          el.tabIndex >= 0 &&
+          !(el as HTMLButtonElement).disabled &&
+          el.matches('a[href], button, input, select, textarea, [tabindex]') &&
+          !el.closest('[inert], [aria-hidden="true"]') &&
+          el.offsetParent !== null,
+      );
+      document.querySelectorAll<HTMLElement>('[data-kb]').forEach((el) => delete el.dataset.kb);
+      els.forEach((el, i) => (el.dataset.kb = String(i)));
+      return els.length;
+    });
+  // Wait until the set of tab stops settles (widgets assign roving tab stops after hydrating).
+  let previous = -1;
+  await expect
+    .poll(
+      async () => {
+        const count = await collect();
+        const stable = count > 0 && count === previous;
+        previous = count;
+        return stable;
+      },
+      { timeout: 5_000, intervals: [200] },
+    )
+    .toBe(true);
+  const total = await collect();
   await page.locator('h1').focus();
   const reached = new Set<string>();
+  const trail: string[] = [];
   for (let i = 0; i < total * 3 + 40 && reached.size < total; i++) {
     await page.keyboard.press('Tab');
+    // Composite widgets (a Radix tablist) delegate focus to a child, so count the nearest marked ancestor.
     const kb = await page.evaluate(
-      () => (document.activeElement as HTMLElement | null)?.dataset.kb,
+      () => (document.activeElement?.closest('[data-kb]') as HTMLElement | null)?.dataset.kb,
     );
     if (kb) reached.add(kb);
+    trail.push(kb ?? '-');
   }
-  expect(reached.size, 'focusable demo controls reached by Tab').toBe(total);
+  const marked = await page.evaluate(() =>
+    [...document.querySelectorAll<HTMLElement>('[data-kb]')].map(
+      (e) => `${e.dataset.kb}:${e.tagName}:${e.getAttribute('role')}`,
+    ),
+  );
+  expect(
+    reached.size,
+    `reached ${[...reached]} of ${marked.join(' ')} via ${trail.join(' ')}`,
+  ).toBe(total);
 }
 
 test.describe('Button specifics', () => {

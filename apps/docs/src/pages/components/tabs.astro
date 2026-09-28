@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/tabs';
+---
+
+<ComponentPage slug="tabs">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">Views of the same thing, in any order.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">A sequence of steps: use a stepper with Back and Next.</Fragment>
+</ComponentPage>

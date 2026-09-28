@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/checkbox';
+---
+
+<ComponentPage slug="checkbox">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">Independent choices, saved together later.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">A setting that applies instantly: that is a Switch.</Fragment>
+</ComponentPage>

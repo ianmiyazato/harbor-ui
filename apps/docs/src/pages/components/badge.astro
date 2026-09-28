@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/badge';
+---
+
+<ComponentPage slug="badge">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">The text says the status; the color reinforces it.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">A color dot alone: invisible to screen readers and to color-blind users.</Fragment>
+</ComponentPage>
