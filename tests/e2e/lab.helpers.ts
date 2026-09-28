@@ -6,8 +6,10 @@ export type TileId = (typeof tiles)[number];
 
 export const tile = (page: Page, id: TileId) => page.locator(`[data-lab-tile="${id}"]`);
 
-/** Wait until every lab island has hydrated. */
+/** Scroll every island into view (they hydrate on visibility), then wait until all have hydrated. */
 export async function hydrated(page: Page) {
+  for (const island of await page.locator('astro-island').all())
+    await island.scrollIntoViewIfNeeded();
   await page.waitForFunction(() =>
     [...document.querySelectorAll('astro-island')].every((i) => !i.hasAttribute('ssr')),
   );

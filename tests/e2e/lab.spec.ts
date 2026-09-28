@@ -47,7 +47,10 @@ for (const id of tiles) {
       const base = await t.evaluate((el) =>
         getComputedStyle(el).getPropertyValue('--hb-motion-duration-base').trim(),
       );
-      expect(base).toBe('calc(240ms * 5)');
+      // Browsers may normalise `calc(240ms * 5)` to `calc(.24s * 5)`; compare the resolved time.
+      const m = /calc\(\s*([\d.]+)(ms|s)\s*\*\s*([\d.]+)\s*\)/.exec(base);
+      expect(m, base).not.toBeNull();
+      expect(Number(m![1]) * (m![2] === 's' ? 1000 : 1) * Number(m![3])).toBeCloseTo(1200, 5);
     });
 
     test('Replay animates only transform and opacity, without layout shift', async ({ page }) => {
@@ -188,6 +191,7 @@ test.describe('2 drag to reorder', () => {
     const t = tile(page, 'reorder');
     const initial = await order(page);
     const handle = t.getByRole('button', { name: new RegExp(`^Reorder ${initial[0]}`) });
+    await handle.scrollIntoViewIfNeeded();
     const box = (await handle.boundingBox())!;
     const slot =
       (await t.locator('[data-item]').nth(1).boundingBox())!.y -
@@ -290,6 +294,7 @@ test.describe('6 pull to refresh', () => {
   }) => {
     const t = tile(page, 'pull');
     const panel = t.locator('[data-pull-panel]');
+    await panel.scrollIntoViewIfNeeded();
     const content = t.locator('[data-pull-content]');
     const box = (await panel.boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + 20);
@@ -306,6 +311,7 @@ test.describe('6 pull to refresh', () => {
 
   test('a short pull snaps back without refreshing', async ({ page }) => {
     const t = tile(page, 'pull');
+    await t.locator('[data-pull-panel]').scrollIntoViewIfNeeded();
     const box = (await t.locator('[data-pull-panel]').boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + 20);
     await page.mouse.down();
