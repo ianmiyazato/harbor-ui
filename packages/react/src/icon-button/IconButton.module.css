@@ -1,0 +1,29 @@
+/* Square: width follows the control height token for each size. */
+.iconButton {
+  width: var(--hb-size-control-md);
+  padding: 0;
+}
+
+.iconButton[data-size='sm'] {
+  width: var(--hb-size-control-sm);
+  padding: 0;
+}
+
+.iconButton[data-size='lg'] {
+  width: var(--hb-size-control-lg);
+  padding: 0;
+}
+
+.icon {
+  display: inline-flex;
+}
+
+.icon > svg {
+  width: var(--hb-size-icon-md);
+  height: var(--hb-size-icon-md);
+}
+
+.iconButton[data-size='sm'] .icon > svg {
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+}
