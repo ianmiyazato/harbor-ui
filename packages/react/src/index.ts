@@ -14,4 +14,6 @@ export { Skeleton } from './skeleton';
 export type { SkeletonProps } from './skeleton';
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
+export { Tab, TabList, TabPanel, Tabs } from './tabs';
+export type { TabListProps, TabPanelProps, TabProps, TabsProps } from './tabs';
 export { useReducedMotion } from './internal/useReducedMotion';

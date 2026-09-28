@@ -8,3 +8,4 @@ export { switchStates } from './switch/Switch.states';
 export { badgeStates, badgeTones } from './badge/Badge.states';
 export { skeletonStates } from './skeleton/Skeleton.states';
 export { selectStates } from './select/Select.states';
+export { TabsExample, tabsStates } from './tabs/Tabs.states';
