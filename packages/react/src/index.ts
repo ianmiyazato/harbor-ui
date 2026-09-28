@@ -8,6 +8,8 @@ export { IconButton } from './icon-button';
 export type { IconButtonProps } from './icon-button';
 export { Input } from './input';
 export type { InputProps } from './input';
+export { Select } from './select';
+export type { SelectOption, SelectProps } from './select';
 export { Skeleton } from './skeleton';
 export type { SkeletonProps } from './skeleton';
 export { Switch } from './switch';
