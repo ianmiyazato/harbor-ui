@@ -1,6 +1,7 @@
 import { colors } from './color.ts';
 import { elevation } from './elevation.ts';
 import { layout } from './layout.ts';
+import { motion } from './motion.ts';
 import { palette } from './palette.ts';
 import { createResolver } from './resolve.ts';
 import { typography } from './typography.ts';
@@ -13,9 +14,17 @@ import type { Token } from './types.ts';
 
 export * from './types.ts';
 export { cssVarName, isThemed, referencesOf } from './resolve.ts';
+export { springSettleMs, springToLinear } from './spring.ts';
 
 /** Every token, primitives first. */
-export const tokens: Token[] = [...palette, ...colors, ...typography, ...layout, ...elevation];
+export const tokens: Token[] = [
+  ...palette,
+  ...colors,
+  ...typography,
+  ...layout,
+  ...elevation,
+  ...motion,
+];
 
 /** Resolve a token to its literal value for a theme, following `{palette.*}` references. */
 export const resolve = createResolver(tokens);
