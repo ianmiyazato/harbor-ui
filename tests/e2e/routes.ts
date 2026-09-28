@@ -8,5 +8,6 @@ export const routes = [
   '/foundations/type-and-space',
   '/foundations/motion',
   '/components',
+  '/principles',
   ...components.map((c) => `/components/${c.slug}`),
 ];
