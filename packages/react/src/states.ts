@@ -2,3 +2,4 @@
 export type { DocumentedState, PreviewState, StateName } from './internal/states';
 export { buttonStates, buttonVariants } from './button/Button.states';
 export { iconButtonStates } from './icon-button/IconButton.states';
+export { inputStates } from './input/Input.states';
