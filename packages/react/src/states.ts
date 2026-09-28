@@ -4,3 +4,4 @@ export { buttonStates, buttonVariants } from './button/Button.states';
 export { iconButtonStates } from './icon-button/IconButton.states';
 export { inputStates } from './input/Input.states';
 export { checkboxStates } from './checkbox/Checkbox.states';
+export { switchStates } from './switch/Switch.states';

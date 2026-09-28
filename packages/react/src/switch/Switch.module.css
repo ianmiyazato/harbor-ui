@@ -1,0 +1,87 @@
+.field {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--hb-space-3);
+  font-family: var(--hb-font-family-ui);
+}
+
+/* 42 × 24 track: the whole control meets the 24px minimum target. */
+.track {
+  position: relative;
+  flex: none;
+  width: calc(var(--hb-size-icon-lg) * 1.75);
+  height: var(--hb-size-icon-lg);
+  padding: 0;
+  border: 0;
+  border-radius: var(--hb-radius-full);
+  background-color: var(--hb-color-control-track);
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: var(--hb-motion-duration-fast);
+  transition-timing-function: var(--hb-motion-easing-standard);
+}
+
+.track[data-state='on'] {
+  background-color: var(--hb-color-control-checked);
+}
+
+/* The thumb travels on the snappy spring; reduced motion maps the spring to an instant change. */
+.thumb {
+  position: absolute;
+  inset-block-start: var(--hb-border-width-thick);
+  inset-inline-start: var(--hb-border-width-thick);
+  width: var(--hb-size-icon-md);
+  height: var(--hb-size-icon-md);
+  border-radius: var(--hb-radius-full);
+  background-color: var(--hb-color-control-thumb);
+  box-shadow: var(--hb-elevation-1);
+  transition: transform var(--hb-motion-spring-snappy);
+}
+
+.track[data-state='on'] .thumb {
+  transform: translateX(calc(var(--hb-size-icon-lg) * 0.75));
+}
+
+.track:hover:not(:disabled) .thumb,
+.track[data-preview='hover'] .thumb {
+  box-shadow: var(--hb-elevation-2);
+}
+
+.track:active:not(:disabled),
+.track[data-preview='active'] {
+  transform: scale(var(--hb-motion-scale-press));
+}
+
+.track:focus-visible,
+.track[data-preview='focus-visible'] {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+.track:disabled {
+  cursor: not-allowed;
+}
+
+.track:disabled,
+.field:has(.track:disabled) .text {
+  opacity: var(--hb-opacity-disabled);
+}
+
+.text {
+  display: grid;
+  gap: var(--hb-space-1);
+  padding-block-start: calc((var(--hb-size-icon-lg) - var(--hb-font-leading-md)) / 2);
+}
+
+.label {
+  color: var(--hb-color-text-default);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+  cursor: pointer;
+}
+
+.description {
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+}
