@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import {
   auditMotion,
   expectCompositorOnly,
@@ -155,8 +156,7 @@ test.describe('1 optimistic like', () => {
 });
 
 test.describe('2 drag to reorder', () => {
-  const order = (page: import('@playwright/test').Page) =>
-    tile(page, 'reorder').locator('[data-item]').allTextContents();
+  const order = (page: Page) => tile(page, 'reorder').locator('[data-item]').allTextContents();
 
   test('reorders with the keyboard: Space lifts, arrows move, Space drops, and it is announced', async ({
     page,
