@@ -1,0 +1,229 @@
+---
+import Base from '../../layouts/Base.astro';
+import { ofCategory, tokens } from '../../lib/tokens';
+
+const sizes = tokens.filter((t) => t.name.startsWith('font.size.'));
+const leading = (step: string) => tokens.find((t) => t.name === `font.leading.${step}`)?.value;
+const families = tokens.filter((t) => t.name.startsWith('font.family.'));
+const space = ofCategory('space');
+const radius = ofCategory('radius');
+const elevation = ofCategory('elevation');
+const varOf = (name: string) => `var(--hb-${name.replaceAll('.', '-')})`;
+---
+
+<Base title="Type and space" description="Harbor's type scale, font families, 4px spacing grid, radii and elevation.">
+  <div class="container page-header">
+    <p class="eyebrow">Foundations · Type and space</p>
+    <h1>Type and space</h1>
+    <p class="lede">
+      Three families with distinct jobs, nine sizes with a line height each, and a 4px grid. Sizes
+      and spacing are emitted in rem, so they follow the reader's font-size setting.
+    </p>
+  </div>
+
+  <section class="container section" aria-labelledby="families">
+    <h2 id="families">Families</h2>
+    <div class="families">
+      {
+        families.map((f) => (
+          <figure class="card family">
+            <p class="specimen" style={`font-family:${varOf(f.name)}`}>Harbor 0123</p>
+            <figcaption>
+              <code>{f.name}</code>
+              <span>{f.description}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="scale">
+    <h2 id="scale">Type scale</h2>
+    <ol class="type-scale">
+      {
+        sizes.map((t) => {
+          const step = t.name.split('.')[2] as string;
+          return (
+            <li data-type-step={step}>
+              <span class="meta">
+                <code>{t.name}</code>
+                <span class="num">
+                  {String(t.value)}/{String(leading(step))}
+                </span>
+              </span>
+              <span
+                class="sample"
+                style={`font-size:${varOf(t.name)};line-height:${varOf(`font.leading.${step}`)}${Number(t.value) >= 24 ? ';font-family:var(--hb-font-family-display);letter-spacing:var(--hb-font-tracking-tight)' : ''}`}
+              >
+                Calm water, clear signals
+              </span>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </section>
+
+  <section class="container section" aria-labelledby="space">
+    <h2 id="space">Spacing</h2>
+    <p class="note">A 4px base. <code>space.N</code> is always N × 4px, so the name tells you the value.</p>
+    <ol class="bars">
+      {
+        space.map((t) => (
+          <li data-space-step={t.name}>
+            <code>{t.name}</code>
+            <span class="num">{String(t.value)}px</span>
+            <span class="bar" style={`width:${varOf(t.name)}`} />
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="container section" aria-labelledby="radius">
+    <h2 id="radius">Radius</h2>
+    <ul class="radii">
+      {
+        radius.map((t) => (
+          <li data-radius-step={t.name}>
+            <span class="radius-box" style={`border-radius:${varOf(t.name)}`} />
+            <code>{t.name}</code>
+            <span class="desc">{t.description}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="container section" aria-labelledby="elevation">
+    <h2 id="elevation">Elevation</h2>
+    <p class="note">Themed: soft shadows on light, deeper shadows with a top highlight on dark, outlines in high contrast.</p>
+    <ul class="radii">
+      {
+        elevation.map((t) => (
+          <li>
+            <span class="radius-box raised" style={`box-shadow:${varOf(t.name)}`} />
+            <code>{t.name}</code>
+            <span class="desc">{t.description}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .note {
+    color: var(--hb-color-text-muted);
+  }
+
+  .families {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--hb-space-4);
+  }
+
+  .family {
+    display: grid;
+    gap: var(--hb-space-3);
+    margin: 0;
+    padding: var(--hb-space-6);
+  }
+
+  .specimen {
+    font-size: var(--hb-font-size-2xl);
+    line-height: var(--hb-font-leading-2xl);
+    font-weight: var(--hb-font-weight-semibold);
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--hb-space-1);
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .type-scale,
+  .bars {
+    display: grid;
+    gap: var(--hb-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .type-scale li {
+    display: grid;
+    grid-template-columns: minmax(10rem, 14rem) 1fr;
+    align-items: baseline;
+    gap: var(--hb-space-4);
+    padding-block: var(--hb-space-2);
+    border-block-end: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+  }
+
+  .meta {
+    display: grid;
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .num {
+    font-family: var(--hb-font-family-code);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sample {
+    overflow-wrap: anywhere;
+  }
+
+  .bars li {
+    display: grid;
+    grid-template-columns: 7rem 4rem 1fr;
+    align-items: center;
+    gap: var(--hb-space-3);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .bar {
+    height: var(--hb-space-4);
+    border-radius: var(--hb-radius-sm);
+    background-color: var(--hb-color-action-primary);
+  }
+
+  .radii {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: var(--hb-space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .radii li {
+    display: grid;
+    gap: var(--hb-space-2);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .radius-box {
+    width: var(--hb-space-16);
+    height: var(--hb-space-16);
+    border: var(--hb-border-width-thick) solid var(--hb-color-action-primary);
+    background-color: var(--hb-color-surface-raised);
+  }
+
+  .radius-box.raised {
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+  }
+
+  .desc {
+    color: var(--hb-color-text-muted);
+  }
+
+  @media (max-width: 40rem) {
+    .type-scale li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

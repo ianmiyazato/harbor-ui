@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import { contrast, ofCategory } from '../../lib/tokens';
+
+const cards = [
+  {
+    href: '/foundations/color',
+    title: 'Color',
+    body: 'Warm neutrals, a teal primary and four status hues, mapped per theme. Contrast is computed, not claimed.',
+    stat: `${contrast.summary.checks} contrast checks, ${contrast.summary.passed} passing`,
+  },
+  {
+    href: '/foundations/type-and-space',
+    title: 'Type and space',
+    body: 'Bricolage Grotesque for display, Geist for interface, Geist Mono for code. A 4px spacing grid and five radii.',
+    stat: `${ofCategory('font').filter((t) => t.name.startsWith('font.size.')).length} type steps`,
+  },
+  {
+    href: '/foundations/motion',
+    title: 'Motion',
+    body: 'Named durations, easings and springs, each with a reduced-motion counterpart and a replay.',
+    stat: `${ofCategory('motion').length} motion tokens`,
+  },
+];
+---
+
+<Base title="Foundations" description="Color, type, space and motion: the tokens every Harbor component is built from.">
+  <div class="container page-header">
+    <p class="eyebrow">Foundations</p>
+    <h1>The decisions under every component</h1>
+    <p class="lede">
+      Tokens are the API. Components only read semantic tokens, so a theme or a motion preference is
+      a mapping, never a fork.
+    </p>
+  </div>
+  <div class="container grid">
+    {
+      cards.map((c) => (
+        <a class="card tile" href={c.href}>
+          <h2>{c.title}</h2>
+          <p>{c.body}</p>
+          <p class="stat">{c.stat}</p>
+        </a>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--hb-space-4);
+  }
+
+  .tile {
+    display: grid;
+    align-content: start;
+    gap: var(--hb-space-2);
+    padding: var(--hb-space-6);
+    color: var(--hb-color-text-default);
+    text-decoration: none;
+    transition: border-color var(--hb-motion-duration-fast) var(--hb-motion-easing-standard);
+  }
+
+  .tile:hover {
+    border-color: var(--hb-color-border-strong);
+  }
+
+  .tile p {
+    color: var(--hb-color-text-muted);
+  }
+
+  .tile .stat {
+    color: var(--hb-color-text-accent);
+    font-family: var(--hb-font-family-code);
+    font-size: var(--hb-font-size-sm);
+  }
+</style>

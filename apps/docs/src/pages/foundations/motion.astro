@@ -1,0 +1,389 @@
+---
+import Base from '../../layouts/Base.astro';
+import { PlayButton } from '../../components/PlayButton';
+import { ofCategory } from '../../lib/tokens';
+import type { TokenEntry } from '../../lib/tokens';
+
+const motion = ofCategory('motion');
+const durations = motion.filter((t) => t.motionType === 'duration');
+const easings = motion.filter((t) => t.motionType === 'easing');
+const springs = motion.filter((t) => t.motionType === 'spring');
+const others = motion.filter((t) => ['distance', 'scale', 'loop'].includes(t.motionType ?? ''));
+const varOf = (name: string) => `var(--hb-${name.replaceAll('.', '-')})`;
+const short = (t: TokenEntry) => t.name.split('.').slice(2).join('.');
+
+/** SVG path for a cubic-bezier in a 100 × 100 box (y up), with room for overshoot. */
+function bezierPath(value: string) {
+  const [x1, y1, x2, y2] = (/\(([^)]+)\)/.exec(value)?.[1] ?? '0,0,1,1').split(',').map(Number) as number[];
+  return `M0,100 C${x1! * 100},${100 - y1! * 100} ${x2! * 100},${100 - y2! * 100} 100,0`;
+}
+
+/** Polyline for a spring from its CSS linear() stops. */
+function springPoints(t: TokenEntry) {
+  const css = String(t.css);
+  const stops = (/linear\(([^)]+)\)/.exec(css)?.[1] ?? '0, 1').split(',').map(Number);
+  return stops.map((y, i) => `${(i / (stops.length - 1)) * 100},${100 - y * 100}`).join(' ');
+}
+const springMs = (t: TokenEntry) => Number(/calc\((\d+)ms/.exec(String(t.css))?.[1] ?? 0);
+const spring = (t: TokenEntry) => t.value as { stiffness: number; damping: number; mass: number };
+---
+
+<Base title="Motion" description="Harbor's motion tokens: durations, easings and springs, each with a reduced-motion counterpart.">
+  <div class="container page-header">
+    <p class="eyebrow">Foundations · Motion</p>
+    <h1>Motion explains change</h1>
+    <p class="lede">
+      Every duration, easing and spring is a named token with a reduced-motion counterpart. Motion
+      moves only <code>transform</code> and <code>opacity</code>. If your system asks for reduced
+      motion, the demos below follow it, just like the components do.
+    </p>
+  </div>
+
+  <section class="container section" aria-labelledby="durations">
+    <h2 id="durations">Durations</h2>
+    <p class="note">
+      Each row plays the token and, beside it, the reduced-motion version: movement removed, a
+      shorter fade kept, or nothing at all.
+    </p>
+    <ul class="rows">
+      {
+        durations.map((t) => (
+          <li class="row" data-motion-token={t.name} style={`--full:${varOf(t.name)};--reduced:${t.reduced?.value}ms`}>
+            <div class="label">
+              <code>{short(t)}</code>
+              <span class="num">{String(t.value)}ms</span>
+              <span class="desc">{t.description}</span>
+            </div>
+            <div class="lanes">
+              <div class="lane" data-lane="full">
+                <span class="lane-name">Full</span>
+                <span class="track"><span class="dot" data-dot /></span>
+              </div>
+              <div class="lane" data-lane="reduced">
+                <span class="lane-name">
+                  Reduced: {t.reduced?.value}ms {t.reduced?.strategy === 'none' ? '(none)' : 'fade'}
+                </span>
+                <span class="track"><span class="dot fade-only" data-dot /></span>
+              </div>
+            </div>
+            <PlayButton label={`Play ${short(t)}`} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="container section" aria-labelledby="curves">
+    <h2 id="curves">Easings and springs</h2>
+    <p class="note">
+      Springs are simulated from stiffness, damping and mass, then compiled to CSS
+      <code>linear()</code> easings, so they run on the compositor like any transition.
+    </p>
+    <div class="curves">
+      {
+        easings.map((t) => (
+          <figure class="card curve row" data-curve={t.name} style={`--full:var(--hb-motion-duration-deliberate);--ease:${varOf(t.name)}`}>
+            <svg viewBox="-10 -30 120 160" aria-hidden="true">
+              <path class="axis" d="M0,100 H100 M0,100 V0" />
+              <path class="line" d={bezierPath(String(t.value))} />
+            </svg>
+            <div class="plot" aria-hidden="true"><span class="x"><span class="y" data-dot /></span></div>
+            <figcaption>
+              <code>{short(t)}</code>
+              <span class="num">{String(t.value)}</span>
+              <span class="desc">{t.description}</span>
+            </figcaption>
+            <PlayButton label={`Play easing ${short(t)}`} />
+          </figure>
+        ))
+      }
+      {
+        springs.map((t) => (
+          <figure class="card curve row" data-curve={t.name} style={`--full:calc(${springMs(t)}ms * var(--hb-timescale, 1));--ease:${String(t.css).replace(/^calc\([^)]*\)\)\s*/, '')}`}>
+            <svg viewBox="-10 -30 120 160" aria-hidden="true">
+              <path class="axis" d="M0,100 H100 M0,100 V0" />
+              <polyline class="line" points={springPoints(t)} />
+            </svg>
+            <div class="plot" aria-hidden="true"><span class="x"><span class="y" data-dot /></span></div>
+            <figcaption>
+              <code>{short(t)}</code>
+              <span class="num">
+                k {spring(t).stiffness} · c {spring(t).damping} · m {spring(t).mass} · settles in {springMs(t)}ms
+              </span>
+              <span class="desc">{t.description}</span>
+            </figcaption>
+            <PlayButton label={`Play spring ${short(t)}`} />
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="more">
+    <h2 id="more">Distances, scales and loops</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Reduced</th><th scope="col">Use</th></tr>
+        </thead>
+        <tbody>
+          {
+            others.map((t) => (
+              <tr>
+                <th scope="row"><code>{t.name.replace('motion.', '')}</code></th>
+                <td class="num">{String(t.value)}{t.unit ?? ''}</td>
+                <td class="num">{String(t.reduced?.value)}{t.unit ?? ''}</td>
+                <td>{t.description}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Replay: restart the CSS animation by removing the attribute and forcing a style flush.
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-play]')) {
+    button.addEventListener('click', () => {
+      const row = button.closest<HTMLElement>('.row');
+      if (!row) return;
+      row.removeAttribute('data-playing');
+      void row.offsetWidth;
+      row.setAttribute('data-playing', '');
+    });
+  }
+</script>
+
+<style>
+  .note {
+    max-width: 44rem;
+    color: var(--hb-color-text-muted);
+  }
+
+  .rows {
+    display: grid;
+    gap: var(--hb-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row:not(figure) {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) 1fr auto;
+    align-items: center;
+    gap: var(--hb-space-4);
+    padding: var(--hb-space-4);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-lg);
+    background-color: var(--hb-color-surface-raised);
+  }
+
+  .label,
+  figcaption {
+    display: grid;
+    gap: var(--hb-space-1);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .num {
+    font-family: var(--hb-font-family-code);
+    font-size: var(--hb-font-size-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .desc {
+    color: var(--hb-color-text-muted);
+  }
+
+  .lanes {
+    display: grid;
+    gap: var(--hb-space-2);
+  }
+
+  .lane {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    align-items: center;
+    gap: var(--hb-space-2);
+  }
+
+  .lane-name {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-xs);
+  }
+
+  .track {
+    position: relative;
+    height: var(--hb-space-4);
+    border-radius: var(--hb-radius-full);
+    background-color: var(--hb-color-surface-sunken);
+    container-type: inline-size;
+  }
+
+  .dot {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--hb-space-4);
+    border-radius: var(--hb-radius-full);
+    background-color: var(--hb-color-action-primary);
+  }
+
+  .row[data-playing] [data-lane='full'] .dot {
+    animation: slide var(--full) var(--hb-motion-easing-standard) both;
+  }
+
+  .row[data-playing] [data-lane='reduced'] .dot {
+    animation: fade var(--reduced) linear both;
+  }
+
+  .fade-only {
+    inset-inline-start: calc(100% - var(--hb-space-4));
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row[data-playing] [data-lane='full'] .dot {
+      inset-inline-start: calc(100% - var(--hb-space-4));
+      animation-name: fade;
+    }
+  }
+
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(100cqi - 100%));
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .curves {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--hb-space-4);
+  }
+
+  .curve {
+    position: relative;
+    display: grid;
+    gap: var(--hb-space-3);
+    margin: 0;
+    padding: var(--hb-space-5);
+  }
+
+  .curve svg {
+    width: 100%;
+    max-width: 12rem;
+    overflow: visible;
+  }
+
+  .axis {
+    fill: none;
+    stroke: var(--hb-color-border-default);
+    stroke-width: 1;
+  }
+
+  .line {
+    fill: none;
+    stroke: var(--hb-color-action-primary);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* The plotted dot: x moves linearly with time, y follows the easing, so it traces the curve. */
+  .plot {
+    position: absolute;
+    inset-block-start: var(--hb-space-5);
+    inset-inline-start: var(--hb-space-5);
+    width: min(12rem, calc(100% - 2 * var(--hb-space-5)));
+    aspect-ratio: 120 / 160;
+    pointer-events: none;
+  }
+
+  .plot .x {
+    position: absolute;
+    inset-inline-start: calc(10 / 120 * 100%);
+    inset-block-start: calc(130 / 160 * 100%);
+    width: calc(100 / 120 * 100%);
+    height: calc(100 / 160 * 100%);
+    translate: 0 -100%;
+    container-type: size;
+  }
+
+  .plot .y {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    width: var(--hb-space-3);
+    height: var(--hb-space-3);
+    margin: calc(var(--hb-space-3) / -2);
+    border-radius: var(--hb-radius-full);
+    background-color: var(--hb-color-text-default);
+    opacity: 0;
+  }
+
+  .curve[data-playing] .x {
+    animation: plot-x var(--full) linear both;
+  }
+
+  .curve[data-playing] .y {
+    opacity: 1;
+    animation: plot-y var(--full) var(--ease) both;
+  }
+
+  @keyframes plot-x {
+    to {
+      transform: translateX(100cqi);
+    }
+  }
+
+  @keyframes plot-y {
+    to {
+      transform: translateY(-100cqb);
+    }
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--hb-font-size-md);
+  }
+
+  th,
+  td {
+    padding: var(--hb-space-2) var(--hb-space-3);
+    border-block-end: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    text-align: start;
+  }
+
+  thead th {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+    font-weight: var(--hb-font-weight-medium);
+  }
+
+  @media (max-width: 48rem) {
+    .row:not(figure) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
