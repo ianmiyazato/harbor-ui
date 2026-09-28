@@ -18,3 +18,4 @@
 - M2 #17 skeleton: text/rect/circle, explicit final size, multi-line text, transform-only shimmer, static under reduced motion.
 - M3 #19 select: Radix Select with label/hint/error, keyboard + typeahead, portal inherits local theme/motion/timescale.
 - M3 #20 tabs: Tabs/TabList/Tab/TabPanel on Radix, automatic activation, transform-only sliding indicator with no-JS fallback.
+- M3 #21 dialog: Radix modal, title required by type, focus trap/return, Esc, scroll lock, token-driven enter/exit, inherits local theme.
