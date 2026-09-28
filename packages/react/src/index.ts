@@ -18,4 +18,6 @@ export { Switch } from './switch';
 export type { SwitchProps } from './switch';
 export { Tab, TabList, TabPanel, Tabs } from './tabs';
 export type { TabListProps, TabPanelProps, TabProps, TabsProps } from './tabs';
+export { Tooltip, TooltipProvider } from './tooltip';
+export type { TooltipProps } from './tooltip';
 export { useReducedMotion } from './internal/useReducedMotion';

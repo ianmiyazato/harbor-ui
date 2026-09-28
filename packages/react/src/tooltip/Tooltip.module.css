@@ -1,0 +1,51 @@
+.tooltip {
+  z-index: var(--hb-z-tooltip);
+  max-width: calc(var(--hb-space-16) * 4);
+  padding: var(--hb-space-1) var(--hb-space-2);
+  border-radius: var(--hb-radius-sm);
+  background-color: var(--hb-color-surface-inverse);
+  color: var(--hb-color-text-inverse);
+  font-family: var(--hb-font-family-ui);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+  font-weight: var(--hb-font-weight-medium);
+  box-shadow: var(--hb-elevation-2);
+  user-select: none;
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+}
+
+/* Appears quickly with a small travel away from the trigger; reduced motion keeps a short fade. */
+.tooltip[data-state='delayed-open'],
+.tooltip[data-state='instant-open'] {
+  animation: tooltip-in var(--hb-motion-duration-fast) var(--hb-motion-easing-standard);
+}
+
+.tooltip[data-side='top'] {
+  --hb-tooltip-dy: 1;
+  --hb-tooltip-dx: 0;
+}
+
+.tooltip[data-side='bottom'] {
+  --hb-tooltip-dy: -1;
+  --hb-tooltip-dx: 0;
+}
+
+.tooltip[data-side='left'] {
+  --hb-tooltip-dy: 0;
+  --hb-tooltip-dx: 1;
+}
+
+.tooltip[data-side='right'] {
+  --hb-tooltip-dy: 0;
+  --hb-tooltip-dx: -1;
+}
+
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+    transform: translate(
+      calc(var(--hb-motion-distance-lift) * 0.5 * var(--hb-tooltip-dx)),
+      calc(var(--hb-motion-distance-lift) * 0.5 * var(--hb-tooltip-dy))
+    );
+  }
+}
