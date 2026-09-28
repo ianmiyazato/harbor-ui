@@ -1,0 +1,124 @@
+@import '@ianmiyazato/harbor-tokens/tokens.css';
+@import '@ianmiyazato/harbor-react/styles.css';
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+@import '@fontsource-variable/bricolage-grotesque/wght.css';
+
+/* Docs chrome. Like the components, it styles with semantic tokens only. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--hb-size-control-lg) + var(--hb-space-6));
+}
+
+body {
+  margin: 0;
+  background-color: var(--hb-color-surface-default);
+  color: var(--hb-color-text-default);
+  font-family: var(--hb-font-family-ui);
+  font-size: var(--hb-font-size-base);
+  line-height: var(--hb-font-leading-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--hb-font-family-display);
+  font-weight: var(--hb-font-weight-semibold);
+  letter-spacing: var(--hb-font-tracking-tight);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--hb-font-size-3xl);
+  line-height: var(--hb-font-leading-3xl);
+}
+
+h2 {
+  font-size: var(--hb-font-size-xl);
+  line-height: var(--hb-font-leading-xl);
+}
+
+h3 {
+  font-size: var(--hb-font-size-lg);
+  line-height: var(--hb-font-leading-lg);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--hb-color-text-link);
+  text-underline-offset: 0.2em;
+}
+
+code,
+kbd {
+  font-family: var(--hb-font-family-code);
+  font-size: 0.9em;
+}
+
+:focus-visible {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.container {
+  width: min(100% - 2 * var(--hb-space-5), 72rem);
+  margin-inline: auto;
+}
+
+.lede {
+  max-width: 44rem;
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-lg);
+  line-height: var(--hb-font-leading-lg);
+}
+
+.eyebrow {
+  color: var(--hb-color-text-accent);
+  font-family: var(--hb-font-family-code);
+  font-size: var(--hb-font-size-sm);
+  line-height: var(--hb-font-leading-sm);
+  letter-spacing: var(--hb-font-tracking-wide);
+  text-transform: uppercase;
+}
+
+.page-header {
+  display: grid;
+  gap: var(--hb-space-3);
+  padding-block: var(--hb-space-12) var(--hb-space-8);
+}
+
+.section {
+  display: grid;
+  gap: var(--hb-space-4);
+  padding-block: var(--hb-space-8);
+  border-block-start: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+}
+
+.card {
+  border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+  border-radius: var(--hb-radius-lg);
+  background-color: var(--hb-color-surface-raised);
+}

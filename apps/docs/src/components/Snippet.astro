@@ -1,0 +1,80 @@
+---
+import { Code } from 'astro:components';
+import { CopyButton } from './CopyButton';
+
+interface Props {
+  code: string;
+  tokens: string[];
+}
+const { code, tokens } = Astro.props;
+
+/** Wrap the token list into comment lines of about 90 characters. */
+const lines: string[] = [];
+let line = '';
+for (const t of tokens) {
+  if ((line + t).length > 86) {
+    lines.push(line.trimEnd());
+    line = '';
+  }
+  line += `${t}, `;
+}
+if (line) lines.push(line.replace(/, $/, ''));
+const full = `// Tokens used: read from the component's CSS module at build time\n${lines.map((l) => `// ${l}`).join('\n')}\n\n${code}`;
+---
+
+<div class="snippet" data-snippet>
+  <Code code={full} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} />
+  <div class="copy"><CopyButton code={full} /></div>
+</div>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    button.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(button.dataset.copy ?? '');
+      const label = button.querySelector('[data-copy-label]');
+      if (label) label.textContent = 'Copied';
+      setTimeout(() => {
+        if (label) label.textContent = 'Copy code';
+      }, 2000);
+    });
+  }
+</script>
+
+<style>
+  .snippet {
+    position: relative;
+    overflow: hidden;
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-lg);
+  }
+
+  .snippet :global(pre) {
+    margin: 0;
+    padding: var(--hb-space-5);
+    overflow-x: auto;
+    font-size: var(--hb-font-size-sm);
+    line-height: var(--hb-font-leading-sm);
+  }
+
+  .copy {
+    position: absolute;
+    inset-block-start: var(--hb-space-3);
+    inset-inline-end: var(--hb-space-3);
+  }
+
+  :global([data-theme='dark']) .snippet :global(.astro-code),
+  :global([data-theme='hc']) .snippet :global(.astro-code),
+  :global([data-theme='dark']) .snippet :global(.astro-code span),
+  :global([data-theme='hc']) .snippet :global(.astro-code span) {
+    background-color: var(--shiki-dark-bg) !important;
+    color: var(--shiki-dark) !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme])) .snippet :global(.astro-code),
+    :global(:root:not([data-theme])) .snippet :global(.astro-code span) {
+      background-color: var(--shiki-dark-bg) !important;
+      color: var(--shiki-dark) !important;
+    }
+  }
+</style>

@@ -1,0 +1,168 @@
+---
+import { Badge } from '@ianmiyazato/harbor-react';
+import components from '../generated/components.json';
+import DemoFrame from '../components/DemoFrame.astro';
+import Facts from '../components/Facts.astro';
+import PropsTable from '../components/PropsTable.astro';
+import Snippet from '../components/Snippet.astro';
+import { StatesRow } from '../components/StatesRow';
+import { docFor } from '../lib/components';
+import Base from './Base.astro';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+const doc = docFor(slug);
+interface Generated {
+  components: {
+    name: string;
+    props: { name: string; type: string; required: boolean; default: string | null; description: string }[];
+  }[];
+  tokens: string[];
+}
+const generated = (components as unknown as Record<string, Generated>)[slug]!;
+---
+
+<Base title={doc.name} description={`${doc.name}: ${doc.rule}`}>
+  <div class="container page-header">
+    <p class="eyebrow"><a href="/components">Components</a> · {doc.name}</p>
+    <div class="title-row">
+      <h1>{doc.name}</h1>
+      {doc.radix && <Badge tone="info">Built on Radix</Badge>}
+    </div>
+    <p class="rule" data-usage-rule>{doc.rule}</p>
+    <p class="lede">{doc.summary}</p>
+  </div>
+
+  <div class="container stack">
+    <DemoFrame label={`${doc.name} demo`} id={`frame-${slug}`}>
+      <div class="variants">
+        <h2 class="block-title">Live demo</h2>
+        <slot name="demo" />
+      </div>
+      <div class="states">
+        <h2 class="block-title">States</h2>
+        <StatesRow slug={slug} />
+      </div>
+    </DemoFrame>
+
+    <section class="section" aria-labelledby="a11y">
+      <h2 id="a11y">Accessibility, measured</h2>
+      <Facts doc={doc} />
+    </section>
+
+    <section class="section" aria-labelledby="code">
+      <h2 id="code">Code</h2>
+      <Snippet code={doc.snippet} tokens={generated.tokens} />
+    </section>
+
+    <section class="section" aria-labelledby="props">
+      <h2 id="props">Props</h2>
+      <PropsTable components={generated.components} />
+    </section>
+
+    <section class="section" aria-labelledby="guidance">
+      <h2 id="guidance">Do and don’t</h2>
+      <div class="do-dont">
+        <figure class="card example" data-do>
+          <div class="example-stage" inert aria-hidden="true"><slot name="do" /></div>
+          <figcaption><Badge tone="success">Do</Badge> <slot name="do-caption" /></figcaption>
+        </figure>
+        <figure class="card example" data-dont>
+          <div class="example-stage" inert aria-hidden="true"><slot name="dont" /></div>
+          <figcaption><Badge tone="danger">Don’t</Badge> <slot name="dont-caption" /></figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--hb-space-3);
+  }
+
+  .rule {
+    font-family: var(--hb-font-family-display);
+    font-size: var(--hb-font-size-xl);
+    line-height: var(--hb-font-leading-xl);
+    font-weight: var(--hb-font-weight-medium);
+  }
+
+  .stack {
+    display: grid;
+    gap: var(--hb-space-8);
+  }
+
+  .block-title {
+    margin-block-end: var(--hb-space-4);
+    color: var(--hb-color-text-muted);
+    font-family: var(--hb-font-family-code);
+    font-size: var(--hb-font-size-sm);
+    line-height: var(--hb-font-leading-sm);
+    font-weight: var(--hb-font-weight-medium);
+    letter-spacing: var(--hb-font-tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .states :global(.states-row) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: var(--hb-space-6) var(--hb-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .states :global(.state) {
+    display: grid;
+    align-content: start;
+    gap: var(--hb-space-2);
+  }
+
+  .states :global(.state-label) {
+    color: var(--hb-color-text-muted);
+    font-family: var(--hb-font-family-code);
+    font-size: var(--hb-font-size-xs);
+    line-height: var(--hb-font-leading-xs);
+  }
+
+  .states :global(.state-note) {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .do-dont {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--hb-space-4);
+  }
+
+  .example {
+    display: grid;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .example-stage {
+    display: grid;
+    place-items: center;
+    min-height: 10rem;
+    padding: var(--hb-space-6);
+    background-color: var(--hb-color-surface-default);
+  }
+
+  .example figcaption {
+    display: flex;
+    align-items: baseline;
+    gap: var(--hb-space-2);
+    padding: var(--hb-space-4);
+    border-block-start: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    font-size: var(--hb-font-size-md);
+    line-height: var(--hb-font-leading-md);
+  }
+</style>

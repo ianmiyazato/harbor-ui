@@ -1,0 +1,369 @@
+---
+import { ButtonStates, ThemeCard } from '../components/HomeSpecimens';
+import Base from '../layouts/Base.astro';
+import { componentDocs } from '../lib/components';
+import { byName, contrast, semanticCount } from '../lib/tokens';
+import { site } from '../site';
+
+const bouncyMs = /calc\((\d+)ms/.exec(String(byName.get('motion.spring.bouncy')?.css))?.[1];
+const stats = [
+  [String(componentDocs.length), 'components'],
+  [String(semanticCount), 'semantic tokens'],
+  [String(contrast.summary.checks), 'contrast checks, all passing'],
+  ['3', 'themes, one set of names'],
+];
+---
+
+<Base>
+  <div class="container hero">
+    <p class="eyebrow">Harbor UI · open source · MIT</p>
+    <h1>{site.pitch}</h1>
+    <p class="lede">
+      Built to show how a small team's frontend foundation can be calm and precise: themes are
+      token mappings, accessibility is computed in CI, and every animation has a spec and a
+      reduced-motion design.
+    </p>
+    <div class="actions">
+      <a class="cta primary" href="/components">Explore components</a>
+      <a class="cta" href="/foundations">See the foundations</a>
+    </div>
+    <dl class="stats">
+      {
+        stats.map(([n, label]) => (
+          <div>
+            <dt>{label}</dt>
+            <dd>{n}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+
+  <div class="container tiles">
+    <section class="card tile" data-tile="component" aria-labelledby="t1">
+      <h2 id="t1">States before variants</h2>
+      <p class="muted">The same Button in the states that make a product feel cheap or polished.</p>
+      <div class="stage" inert><ButtonStates /></div>
+      <a href="/components/button">Button, every state →</a>
+    </section>
+
+    <section class="card tile" data-tile="theme" aria-labelledby="t2">
+      <h2 id="t2">Tokens are the API</h2>
+      <p class="muted">One card, three themes. Nothing changes but the token mapping.</p>
+      <fieldset class="seg" role="radiogroup" aria-label="Card theme">
+        <legend class="visually-hidden">Card theme</legend>
+        {
+          [
+            ['light', 'Light'],
+            ['dark', 'Dark'],
+            ['hc', 'High contrast'],
+          ].map(([value, label], i) => (
+            <label>
+              <input type="radio" name="tile-theme" value={value} checked={i === 0} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </fieldset>
+      <div class="stage themed" data-theme-target data-theme="light" inert><ThemeCard /></div>
+    </section>
+
+    <section class="card tile" data-tile="motion" aria-labelledby="t3">
+      <h2 id="t3">Motion explains change</h2>
+      <p class="muted">
+        A confirmation that springs in (<code>spring.bouncy</code>, {bouncyMs} ms). With reduced motion
+        it simply appears.
+      </p>
+      <div class="stage motion-stage" data-stage aria-hidden="true">
+        <div class="note-card">
+          <span class="check">✓</span>
+          <span>Changes saved</span>
+        </div>
+      </div>
+      <button class="replay" type="button" data-replay>Replay animation</button>
+    </section>
+  </div>
+
+  <nav class="container more" aria-label="Explore">
+    <a class="card link" href="/foundations"><strong>Foundations</strong><span>Color, contrast report, type, space and motion tokens.</span></a>
+    <a class="card link" href="/components"><strong>Components</strong><span>Twelve components with every state in three themes.</span></a>
+    <a class="card link" href="/principles"><strong>Principles</strong><span>Five rules, each tied to a decision in the repo.</span></a>
+  </nav>
+</Base>
+
+<script>
+  const target = document.querySelector<HTMLElement>('[data-theme-target]');
+  for (const radio of document.querySelectorAll<HTMLInputElement>('input[name="tile-theme"]')) {
+    radio.addEventListener('change', () => target?.setAttribute('data-theme', radio.value));
+  }
+  const stage = document.querySelector<HTMLElement>('[data-stage]');
+  document.querySelector('[data-replay]')?.addEventListener('click', () => {
+    stage?.removeAttribute('data-playing');
+    void stage?.offsetWidth;
+    stage?.setAttribute('data-playing', '');
+  });
+</script>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--hb-space-5);
+    padding-block: var(--hb-space-16) var(--hb-space-12);
+  }
+
+  .hero h1 {
+    max-width: 22ch;
+    font-size: clamp(var(--hb-font-size-2xl), 6vw, var(--hb-font-size-4xl));
+    line-height: 1.05;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hb-space-3);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--hb-size-control-lg);
+    padding-inline: var(--hb-space-5);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-md);
+    background-color: var(--hb-color-action-secondary);
+    color: var(--hb-color-text-default);
+    font-weight: var(--hb-font-weight-semibold);
+    text-decoration: none;
+  }
+
+  .cta.primary {
+    border-color: transparent;
+    background-color: var(--hb-color-action-primary);
+    color: var(--hb-color-text-on-action);
+  }
+
+  .cta:hover {
+    background-color: var(--hb-color-action-secondary-hover);
+  }
+
+  .cta.primary:hover {
+    background-color: var(--hb-color-action-primary-hover);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+    gap: var(--hb-space-4);
+    max-width: 48rem;
+    margin: var(--hb-space-4) 0 0;
+  }
+
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--hb-space-1);
+  }
+
+  .stats dd {
+    margin: 0;
+    font-family: var(--hb-font-family-display);
+    font-size: var(--hb-font-size-2xl);
+    line-height: var(--hb-font-leading-2xl);
+    font-weight: var(--hb-font-weight-semibold);
+  }
+
+  .stats dt {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--hb-space-4);
+  }
+
+  .tile {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: var(--hb-space-3);
+    padding: var(--hb-space-6);
+  }
+
+  .muted {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-md);
+    line-height: var(--hb-font-leading-md);
+  }
+
+  .stage {
+    display: grid;
+    place-items: center;
+    min-height: 11rem;
+    padding: var(--hb-space-4);
+    border-radius: var(--hb-radius-lg);
+    background-color: var(--hb-color-surface-default);
+    color: var(--hb-color-text-default);
+    box-shadow: inset 0 0 0 var(--hb-border-width-thin) var(--hb-color-border-default);
+  }
+
+  .stage :global(.specimen-grid) {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: var(--hb-space-4) var(--hb-space-6);
+  }
+
+  .stage :global(.specimen) {
+    display: grid;
+    gap: var(--hb-space-1);
+    justify-items: start;
+  }
+
+  .stage :global(.specimen-label) {
+    color: var(--hb-color-text-muted);
+    font-family: var(--hb-font-family-code);
+    font-size: var(--hb-font-size-xs);
+  }
+
+  .stage :global(.mini-card) {
+    display: grid;
+    gap: var(--hb-space-3);
+    width: 100%;
+    padding: var(--hb-space-4);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-lg);
+    background-color: var(--hb-color-surface-raised);
+    box-shadow: var(--hb-elevation-1);
+  }
+
+  .stage :global(.mini-row) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--hb-space-2);
+  }
+
+  .stage :global(.mini-muted) {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  .seg {
+    display: inline-flex;
+    justify-self: start;
+    gap: var(--hb-space-1);
+    margin: 0;
+    padding: var(--hb-space-1);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-md);
+  }
+
+  .seg label {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .seg input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .seg span {
+    padding: var(--hb-space-1) var(--hb-space-2);
+    border-radius: var(--hb-radius-sm);
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+    font-weight: var(--hb-font-weight-medium);
+  }
+
+  .seg input:checked + span {
+    background-color: var(--hb-color-action-secondary);
+    color: var(--hb-color-text-default);
+  }
+
+  .seg input:focus-visible + span {
+    outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+    outline-offset: var(--hb-border-focus-offset);
+  }
+
+  .note-card {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--hb-space-2);
+    padding: var(--hb-space-3) var(--hb-space-4);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-lg);
+    background-color: var(--hb-color-surface-overlay);
+    box-shadow: var(--hb-elevation-2);
+    font-weight: var(--hb-font-weight-semibold);
+  }
+
+  .check {
+    display: inline-grid;
+    place-items: center;
+    width: var(--hb-size-icon-md);
+    height: var(--hb-size-icon-md);
+    border-radius: var(--hb-radius-full);
+    background-color: var(--hb-color-control-checked);
+    color: var(--hb-color-control-thumb);
+    font-size: var(--hb-font-size-xs);
+  }
+
+  .motion-stage[data-playing] .note-card {
+    animation: spring-in var(--hb-motion-spring-bouncy) both;
+  }
+
+  @keyframes spring-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--hb-motion-distance-enter)) scale(var(--hb-motion-scale-enter));
+    }
+  }
+
+  .replay {
+    justify-self: start;
+    min-height: var(--hb-size-control-sm);
+    padding-inline: var(--hb-space-3);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-md);
+    background-color: var(--hb-color-action-secondary);
+    color: var(--hb-color-text-default);
+    font: inherit;
+    font-size: var(--hb-font-size-sm);
+    font-weight: var(--hb-font-weight-semibold);
+    cursor: pointer;
+  }
+
+  .replay:hover {
+    background-color: var(--hb-color-action-secondary-hover);
+  }
+
+  .more {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--hb-space-4);
+    padding-block-start: var(--hb-space-8);
+  }
+
+  .link {
+    display: grid;
+    gap: var(--hb-space-1);
+    padding: var(--hb-space-5);
+    color: var(--hb-color-text-default);
+    text-decoration: none;
+  }
+
+  .link:hover {
+    border-color: var(--hb-color-border-strong);
+  }
+
+  .link span {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-md);
+  }
+</style>

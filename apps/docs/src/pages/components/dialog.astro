@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/dialog';
+---
+
+<ComponentPage slug="dialog">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">A blocking decision with a clear title and an obvious way out.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">A dialog for a tip: it interrupts for nothing.</Fragment>
+</ComponentPage>

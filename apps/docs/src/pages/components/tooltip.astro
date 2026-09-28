@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/tooltip';
+---
+
+<ComponentPage slug="tooltip">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">A short name for an icon, shown on hover and focus.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">Essential rules or links hidden in a tooltip users may never open.</Fragment>
+</ComponentPage>

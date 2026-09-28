@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/input';
+---
+
+<ComponentPage slug="input">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">A visible label and a hint. The placeholder is only an example.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">A placeholder as the label disappears on typing and fails contrast.</Fragment>
+</ComponentPage>

@@ -17,13 +17,18 @@
     "test": "vitest run",
     "test:unit": "vitest run --project infra --project tokens --project react",
     "test:a11y": "vitest run --project a11y --passWithNoTests",
+    "test:e2e": "playwright test --project=e2e",
+    "test:visual": "playwright test --project=visual",
     "check": "pnpm lint && pnpm typecheck && pnpm test:unit && pnpm test:a11y && pnpm build",
     "size": "pnpm --filter @ianmiyazato/harbor-react size",
     "format": "prettier --write .",
     "deploy:prod": "vercel deploy --prod"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^9.39.5",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^22.20.4",
     "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.39.5",

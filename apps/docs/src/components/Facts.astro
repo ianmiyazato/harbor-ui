@@ -1,0 +1,110 @@
+---
+import { contrast, resolve } from '../lib/tokens';
+import type { ComponentDoc } from '../lib/components';
+
+interface Props {
+  doc: ComponentDoc;
+}
+const { doc } = Astro.props;
+const lowest = (fg: string, bg: string) =>
+  Math.min(...contrast.results.filter((r) => r.fg === fg && r.bg === bg).map((r) => r.ratio));
+const focusRatio = Math.min(
+  ...contrast.results.filter((r) => r.fg === 'color.border.focus').map((r) => r.ratio),
+);
+const c = 'fg' in doc.contrast ? doc.contrast : null;
+const t = 'token' in doc.target ? doc.target : null;
+const targetPx = t ? Number(resolve(t.token)) : null;
+---
+
+<dl class="facts" aria-label="Accessibility facts">
+  <div
+    class="fact"
+    data-fact="contrast"
+    {...c ? { 'data-fg': c.fg, 'data-bg': c.bg } : {}}
+  >
+    <dt>Contrast</dt>
+    {
+      c ? (
+        <dd>
+          <strong>{lowest(c.fg, c.bg).toFixed(2)}:1</strong>
+          <span>{c.label}, lowest of light, dark and high contrast.</span>
+        </dd>
+      ) : (
+        <dd>
+          <strong>n/a</strong>
+          <span>{(doc.contrast as { note: string }).note}</span>
+        </dd>
+      )
+    }
+  </div>
+  <div class="fact" data-fact="target" {...t ? { 'data-target-selector': t.selector, 'data-target-px': targetPx } : {}}>
+    <dt>Target size</dt>
+    {
+      t ? (
+        <dd>
+          <strong>{targetPx}px</strong>
+          <span>
+            {t.label} (<code>{t.token}</code>). WCAG 2.2 asks for 24px; the e2e suite measures it.
+          </span>
+        </dd>
+      ) : (
+        <dd>
+          <strong>n/a</strong>
+          <span>{(doc.target as { note: string }).note}</span>
+        </dd>
+      )
+    }
+  </div>
+  <div class="fact" data-fact="focus">
+    <dt>Focus ring</dt>
+    <dd>
+      <strong>2px</strong>
+      <span>
+        Solid <code>border.focus</code> with a 2px offset, at least {focusRatio.toFixed(2)}:1 against every
+        surface in every theme.
+      </span>
+    </dd>
+  </div>
+</dl>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--hb-space-3);
+    margin: 0;
+  }
+
+  .fact {
+    display: grid;
+    gap: var(--hb-space-1);
+    padding: var(--hb-space-4);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-lg);
+    background-color: var(--hb-color-surface-raised);
+  }
+
+  dt {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+  }
+
+  dd {
+    display: grid;
+    gap: var(--hb-space-1);
+    margin: 0;
+    font-size: var(--hb-font-size-sm);
+    line-height: var(--hb-font-leading-sm);
+  }
+
+  strong {
+    font-family: var(--hb-font-family-display);
+    font-size: var(--hb-font-size-2xl);
+    line-height: var(--hb-font-leading-2xl);
+    font-weight: var(--hb-font-weight-semibold);
+  }
+
+  span {
+    color: var(--hb-color-text-muted);
+  }
+</style>
