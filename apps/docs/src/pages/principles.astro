@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import { contrast, semanticCount } from '../lib/tokens';
+import { site } from '../site';
+
+const blob = (path: string) => `${site.repo}/blob/main/${path}`;
+const principles = [
+  {
+    title: 'States before variants',
+    body: 'Products feel cheap or polished in their hover, focus, loading and error states, not in their fifth button color. Every component documents its states in one registry that drives the docs, the axe tests and the screenshots, so a state cannot be forgotten in one place and shipped in another.',
+    evidence: [
+      ['Button.states.ts: the documented states', blob('packages/react/src/button/Button.states.ts')],
+      ['Loading keeps its width, measured in Playwright', blob('tests/e2e/components.spec.ts')],
+    ],
+  },
+  {
+    title: 'Tokens are the API',
+    body: `Components read ${semanticCount} semantic tokens and never touch the palette. Light, dark and high contrast are mappings from those names to primitives, so one engineer can restyle every product without editing a component. Stylelint fails the build on any raw color, size or duration.`,
+    evidence: [
+      ['Semantic colors, one row per token and theme', blob('packages/tokens/src/color.ts')],
+      ['The token-only stylelint rules', blob('packages/react/stylelint.config.js')],
+    ],
+  },
+  {
+    title: 'Accessibility is measured, not claimed',
+    body: `Contrast is computed in CI for every pair the components render in every theme: ${contrast.summary.checks} checks today. Axe runs on every documented state in unit tests and on every page in Playwright, and the docs' accessibility facts are measured against the rendered DOM.`,
+    evidence: [
+      ['The contrast matrix test', blob('packages/tokens/test/contrast.test.ts')],
+      ['Site-wide axe and console checks', blob('tests/e2e/site.spec.ts')],
+    ],
+  },
+  {
+    title: 'Motion explains change',
+    body: 'Every duration, easing and spring is a named token with a reduced-motion counterpart. Springs compile to CSS linear() so they run on the compositor. Animation only moves transform and opacity; if it does not explain a change, it does not ship.',
+    evidence: [
+      ['Motion tokens and their reduced values', blob('packages/tokens/src/motion.ts')],
+      ['Spring simulation to CSS linear()', blob('packages/tokens/src/spring.ts')],
+    ],
+  },
+  {
+    title: 'Small surface, deep quality',
+    body: 'Twelve components, not sixty. Complex widgets stand on Radix so the effort goes into tokens, states and craft instead of re-deriving focus management. Budgets are enforced in CI, and every behavior started as a failing test committed before the code.',
+    evidence: [
+      ['Size budgets per usage pattern', blob('packages/react/.size-limit.json')],
+      ['Decision log, including what was traded away', blob('docs/agents/decision-log.md')],
+    ],
+  },
+];
+---
+
+<Base title="Principles" description="Five principles behind Harbor UI, each tied to a real decision in the repository.">
+  <div class="container page-header">
+    <p class="eyebrow">Principles</p>
+    <h1>Five rules, each with a receipt</h1>
+    <p class="lede">Principles are cheap. These link to the code, tests and decisions that enforce them.</p>
+  </div>
+  <ol class="container list">
+    {
+      principles.map((p, i) => (
+        <li class="card item">
+          <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="body">
+            <h2>{p.title}</h2>
+            <p>{p.body}</p>
+            <ul class="evidence" data-evidence>
+              {p.evidence.map(([label, href]) => (
+                <li>
+                  <a href={href}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</Base>
+
+<style>
+  .list {
+    display: grid;
+    gap: var(--hb-space-4);
+    margin-block: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--hb-space-5);
+    padding: var(--hb-space-6);
+  }
+
+  .num {
+    color: var(--hb-color-text-accent);
+    font-family: var(--hb-font-family-code);
+    font-size: var(--hb-font-size-lg);
+    line-height: var(--hb-font-leading-xl);
+  }
+
+  .body {
+    display: grid;
+    gap: var(--hb-space-3);
+    max-width: 46rem;
+  }
+
+  .body p {
+    color: var(--hb-color-text-muted);
+  }
+
+  .evidence {
+    display: grid;
+    gap: var(--hb-space-1);
+    margin: 0;
+    padding-inline-start: var(--hb-space-5);
+    font-size: var(--hb-font-size-md);
+  }
+</style>

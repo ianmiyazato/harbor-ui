@@ -37,3 +37,18 @@ test('the skip link moves focus to the main content', async ({ page }) => {
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#main$/);
 });
+
+test('no page scrolls sideways on a 390px phone', async ({ browser }) => {
+  test.setTimeout(120_000);
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  for (const path of await crawl(page)) {
+    await page.goto(path);
+    const [scroll, client] = await page.evaluate(() => [
+      document.documentElement.scrollWidth,
+      document.documentElement.clientWidth,
+    ]);
+    expect(scroll, path).toBeLessThanOrEqual(client);
+  }
+  await context.close();
+});
