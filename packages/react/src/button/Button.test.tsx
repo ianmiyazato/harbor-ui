@@ -55,7 +55,42 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
+  it('is not busy, disabled or loading while idle', () => {
+    render(<Button>Save</Button>);
+    const button = screen.getByRole('button');
+    expect(button).not.toHaveAttribute('aria-busy');
+    expect(button).not.toHaveAttribute('aria-disabled');
+    expect(button).not.toHaveAttribute('data-loading');
+  });
+
+  it('works without an onClick handler', async () => {
+    const user = userEvent.setup();
+    render(<Button>Save</Button>);
+    await user.click(screen.getByRole('button'));
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
+
   describe('loading', () => {
+    it('does not submit its form while loading', async () => {
+      const user = userEvent.setup();
+      const onSubmit = vi.fn((e: { preventDefault: () => void }) => e.preventDefault());
+      render(
+        <form onSubmit={onSubmit}>
+          <Button type="submit" loading>
+            Save
+          </Button>
+        </form>,
+      );
+      await user.click(screen.getByRole('button'));
+      expect(onSubmit).not.toHaveBeenCalled();
+      expect(screen.getByRole('button')).toHaveAttribute('data-loading');
+    });
+
+    it('announces “Loading” by default', () => {
+      render(<Button loading>Save</Button>);
+      expect(screen.getByRole('button')).toHaveAccessibleName('Save Loading');
+    });
+
     it('stays focusable but is busy and ignores activation', async () => {
       const user = userEvent.setup();
       const onClick = vi.fn();
