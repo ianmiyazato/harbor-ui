@@ -1,0 +1,145 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--hb-z-overlay);
+  background-color: var(--hb-color-surface-scrim);
+}
+
+.overlay[data-state='open'] {
+  animation: fade-in var(--hb-motion-duration-slow) var(--hb-motion-easing-standard);
+}
+
+.overlay[data-state='closed'] {
+  animation: fade-out var(--hb-motion-duration-fast) var(--hb-motion-easing-exit);
+}
+
+/* Centered with inset + auto margins, so transform stays free for the enter animation. */
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: var(--hb-z-overlay);
+  display: grid;
+  gap: var(--hb-space-3);
+  width: min(100% - var(--hb-space-8), var(--hb-space-16) * 8);
+  height: fit-content;
+  max-height: calc(100dvh - var(--hb-space-8));
+  margin: auto;
+  padding: var(--hb-space-6);
+  overflow: auto;
+  border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+  border-radius: var(--hb-radius-xl);
+  background-color: var(--hb-color-surface-overlay);
+  color: var(--hb-color-text-default);
+  box-shadow: var(--hb-elevation-3);
+  font-family: var(--hb-font-family-ui);
+}
+
+.content[data-size='sm'] {
+  width: min(100% - var(--hb-space-8), var(--hb-space-16) * 6);
+}
+
+.content[data-size='lg'] {
+  width: min(100% - var(--hb-space-8), var(--hb-space-16) * 11);
+}
+
+.content:focus-visible {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+/* Enter: rises and scales up slightly with an emphasized curve. Reduced motion keeps only the fade. */
+.content[data-state='open'] {
+  animation: dialog-in var(--hb-motion-duration-slow) var(--hb-motion-easing-emphasized);
+}
+
+.content[data-state='closed'] {
+  animation: dialog-out var(--hb-motion-duration-fast) var(--hb-motion-easing-exit);
+}
+
+.title {
+  margin: 0;
+  padding-inline-end: var(--hb-space-8);
+  font-family: var(--hb-font-family-display);
+  font-size: var(--hb-font-size-xl);
+  line-height: var(--hb-font-leading-xl);
+  font-weight: var(--hb-font-weight-semibold);
+  letter-spacing: var(--hb-font-tracking-tight);
+}
+
+.description {
+  margin: 0;
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-md);
+  line-height: var(--hb-font-leading-md);
+}
+
+.body {
+  font-size: var(--hb-font-size-base);
+  line-height: var(--hb-font-leading-base);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--hb-space-2);
+  margin-block-start: var(--hb-space-3);
+}
+
+.close {
+  position: absolute;
+  inset-block-start: var(--hb-space-4);
+  inset-inline-end: var(--hb-space-4);
+  display: grid;
+  place-items: center;
+  width: var(--hb-size-control-sm);
+  height: var(--hb-size-control-sm);
+  padding: 0;
+  border: 0;
+  border-radius: var(--hb-radius-md);
+  background-color: transparent;
+  color: var(--hb-color-text-muted);
+  cursor: pointer;
+}
+
+.close > svg {
+  width: var(--hb-size-icon-sm);
+  height: var(--hb-size-icon-sm);
+}
+
+.close:hover {
+  background-color: var(--hb-color-action-ghost-hover);
+  color: var(--hb-color-text-default);
+}
+
+.close:focus-visible {
+  outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+  outline-offset: var(--hb-border-focus-offset);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--hb-motion-distance-enter) * 0.5))
+      scale(var(--hb-motion-scale-enter));
+  }
+}
+
+@keyframes dialog-out {
+  to {
+    opacity: 0;
+    transform: scale(var(--hb-motion-scale-enter));
+  }
+}

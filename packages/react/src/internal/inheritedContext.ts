@@ -27,3 +27,19 @@ export function readInheritedContext(node: Element | null): InheritedContext {
   }
   return context;
 }
+
+/** Apply the anchor's inherited context straight onto a portalled node (used from ref callbacks). */
+export function applyInheritedContext(node: HTMLElement, anchor: Element | null) {
+  const context = readInheritedContext(anchor);
+  if (context['data-theme']) node.setAttribute('data-theme', context['data-theme']);
+  if (context['data-motion'] && !node.hasAttribute('data-motion')) {
+    node.setAttribute('data-motion', context['data-motion']);
+  }
+  if (context['data-timescale'] !== undefined) {
+    node.setAttribute('data-timescale', '');
+    node.style.setProperty(
+      '--hb-timescale',
+      String(context.style?.['--hb-timescale' as never] ?? '1'),
+    );
+  }
+}
