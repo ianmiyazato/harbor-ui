@@ -69,8 +69,11 @@ for (const [folder, names] of Object.entries(folders)) {
             type: p.type.name,
             required: p.required,
             default:
-              String(p.defaultValue?.value ?? p.tags?.default ?? '').replace(/^'(.*)'$/, '$1') ||
-              null,
+              String(
+                p.defaultValue?.value ??
+                  (p.tags as Record<string, string> | undefined)?.default ??
+                  '',
+              ).replace(/^'(.*)'$/, '$1') || null,
             description: p.description,
           }))
           .sort((a, b) => Number(b.required) - Number(a.required) || a.name.localeCompare(b.name)),
