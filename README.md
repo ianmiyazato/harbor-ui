@@ -28,7 +28,7 @@ animation has a spec, a slow-motion replay and a reduced-motion design.
 4. **[Motion tokens](https://harbor-ui-docs.vercel.app/foundations/motion)**: springs simulated from
    stiffness and damping, compiled to CSS `linear()`, each with its reduced counterpart.
 5. **The history**: `git log --oneline develop` shows a `test(...)` commit before every `feat(...)`
-   (34 test commits, 25 feat, 3 fixes found by later tests). Rebase merges keep the pairs
+   (34 test commits, 25 feat, 3 fixes, two of them bugs caught by later tests). Rebase merges keep the pairs
    ([ADR 0005](docs/adr/0005-rebase-merges-for-test-first-history.md)).
 
 ## Principles
@@ -85,7 +85,7 @@ All numbers are from real runs on 2026-09-28.
 | Bundle (gzip, size-limit in CI)        | Button **0.64 kB**; 7 core components 2.84 kB; styles 4.39 kB; full package with Radix 45.07 kB (target was 35 kB, see [D-020](docs/agents/decision-log.md)) |
 | Page JS (gzip)                         | content pages load no JS files (≤ 0.5 kB inline); a component page 74 kB (React runtime + demo); `/lab` 95.4 kB (65.9 kB of it is the React/Astro runtime)   |
 | Motion                                 | every lab animation is transform/opacity only and CLS 0 (checked by e2e); 0 frames over 50 ms unthrottled ([docs/perf/lab.md](docs/perf/lab.md))             |
-| Deploys                                | 2 production deploys so far (M4, M5) of a 5-deploy budget; this release is the third. 0 previews, 1 project, 0 functions                                     |
+| Deploys                                | 3 production deploys (M4, M5, M7) of a 5-deploy budget; 0 previews, 1 project, 0 functions                                                                   |
 
 Known gaps are listed honestly in [AGENTS.md](AGENTS.md#known-gaps): the full-package and lab JS
 targets are missed because of Radix and the React runtime, not hidden.
