@@ -94,12 +94,12 @@ Built production deploys: **0 / 5**. Rules: [`docs/agents/deploy.md`](docs/agent
 
 ## Changelog (latest; full log in [`docs/agents/changelog.md`](docs/agents/changelog.md))
 
+- M2 #12 icon-button: square Button, `aria-label` required at the type level (proven by @ts-expect-error in typecheck), axe on 24 combos.
 - M2 #11 button: 4 variants × 3 sizes, loading without layout shift, reduced-motion spinner, states registry (`@ianmiyazato/harbor-react/states`), axe on 24 variant×state combos.
 - M2 #10 react: stylelint token-only rules (no hex/rgb/named colors, px/rem/ms/s, palette vars, raw weights/z/easing), tested with fixtures.
 - M2 #9 react: package scaffold (Vite lib, preserveModules, CSS Modules, jsdom tests), useReducedMotion.
 - M1 #8 tokens: build emits tokens.css (themes, OS prefs, timescale, reduced motion), tokens.json, typed index.js/d.ts, contrast report; 205 tokens.
 - M1 #7 tokens: motion (6 durations, 3 easings, 3 springs → CSS linear(), distances, scales, shimmer loop), each with a reduced counterpart.
-- M1 #6 tokens: contrast matrix, 39 pairs × 3 themes = 117 checks, all passing; writes dist/contrast-report.json.
 
 ## Known gaps
 
