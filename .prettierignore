@@ -6,3 +6,5 @@ tests/visual/**/*-snapshots/**
 .github/
 docs/agents/
 AGENTS.md
+.stryker-tmp/
+reports/
