@@ -1,0 +1,101 @@
+---
+/**
+ * Light / Dark / High contrast. A native radio group: arrow keys, labels and focus come free.
+ * Until the visitor chooses, the page follows the OS (prefers-color-scheme / prefers-contrast).
+ */
+const options = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'hc', label: 'High contrast' },
+];
+---
+
+<fieldset class="switcher" role="radiogroup" aria-label="Theme" data-theme-switcher>
+  <legend class="visually-hidden">Theme</legend>
+  {
+    options.map((o) => (
+      <label class="option">
+        <input type="radio" name="hb-theme" value={o.value} />
+        <span>{o.label}</span>
+      </label>
+    ))
+  }
+</fieldset>
+
+<script>
+  const KEY = 'hb-theme';
+  const root = document.documentElement;
+  const current = () =>
+    root.dataset.theme ??
+    (matchMedia('(prefers-contrast: more)').matches
+      ? 'hc'
+      : matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light');
+
+  for (const group of document.querySelectorAll<HTMLFieldSetElement>('[data-theme-switcher]')) {
+    const radios = group.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+    for (const radio of radios) {
+      radio.checked = radio.value === current();
+      radio.addEventListener('change', () => {
+        root.dataset.theme = radio.value;
+        try {
+          localStorage.setItem(KEY, radio.value);
+        } catch {
+          /* private mode: the choice lasts for this page only */
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+  .switcher {
+    display: inline-flex;
+    gap: var(--hb-space-1);
+    margin: 0;
+    padding: var(--hb-space-1);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-md);
+    background-color: var(--hb-color-surface-sunken);
+  }
+
+  .option {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .option input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .option span {
+    padding: var(--hb-space-1) var(--hb-space-2);
+    border-radius: var(--hb-radius-sm);
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+    line-height: var(--hb-font-leading-sm);
+    font-weight: var(--hb-font-weight-medium);
+    white-space: nowrap;
+    transition: background-color var(--hb-motion-duration-fast) var(--hb-motion-easing-standard);
+  }
+
+  .option input:hover + span {
+    color: var(--hb-color-text-default);
+  }
+
+  .option input:checked + span {
+    background-color: var(--hb-color-surface-raised);
+    color: var(--hb-color-text-default);
+    box-shadow: var(--hb-elevation-1);
+  }
+
+  .option input:focus-visible + span {
+    outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+    outline-offset: var(--hb-border-focus-offset);
+  }
+</style>
