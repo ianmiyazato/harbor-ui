@@ -62,8 +62,9 @@
   cursor: not-allowed;
 }
 
+/* Dim the control and its label; the description stays readable because it often says why. */
 .track:disabled,
-.field:has(.track:disabled) .text {
+.field:has(.track:disabled) .label {
   opacity: var(--hb-opacity-disabled);
 }
 
