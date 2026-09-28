@@ -20,3 +20,4 @@
 - M3 #20 tabs: Tabs/TabList/Tab/TabPanel on Radix, automatic activation, transform-only sliding indicator with no-JS fallback.
 - M3 #21 dialog: Radix modal, title required by type, focus trap/return, Esc, scroll lock, token-driven enter/exit, inherits local theme.
 - M3 #22 tooltip: Radix, focus/hover, Escape + hoverable (WCAG 1.4.13), aria-describedby, side-aware enter motion.
+- M3 #23 toast: useToast() + ToastProvider on Radix, FIFO queue (max 3), 6 s, pause on hover/focus, undo action, polite live region, contained mode for demos.
