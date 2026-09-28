@@ -76,6 +76,12 @@ describe('token schema', () => {
     }
   });
 
+  it('refuses to resolve unknown tokens and values with no single scalar', () => {
+    expect(() => resolve('color.does-not-exist', 'light')).toThrow(/Unknown token/);
+    expect(() => resolve('motion.spring.snappy', 'light')).toThrow(/no scalar value/);
+    expect(resolve('space.4', 'dark')).toBe(16);
+  });
+
   it('resolves semantic colors per theme to literal hex values', () => {
     for (const t of semantic.filter((t) => t.category === 'color')) {
       for (const theme of themes) {
