@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import bricolage from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url';
+import geist from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 import Logo from '../components/Logo.astro';
 import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 import { nav, site } from '../site';
@@ -22,6 +24,9 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- The two faces that set the first screen: preloaded so text does not re-wrap when they swap in. -->
+    <link rel="preload" href={bricolage} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geist} as="font" type="font/woff2" crossorigin />
     <meta name="color-scheme" content="light dark" />
     <script is:inline>
       // Apply a saved theme before the first paint so there is no flash.
