@@ -13,3 +13,5 @@ Format: `D-NNN — decision. Why. (milestone)`. Newest last.
 - **D-009** — `turbo.json` sets `agentGuidance: false`. Turbo 2.11 injects a generic "read the bundled docs" block into AGENTS.md when it detects an agent; the index has a 150-line budget and the turbo config here is four tasks. (M0)
 - **D-010** — The Vercel project `harbor-ui` was created **unlinked** (configured, not deployed). Linking failed: the Vercel GitHub App is not installed for this repository, and installing a GitHub App needs the owner in a browser. Git-based gating (`vercel.json`, ignore step) stays in place for when it is linked. (M0)
 - **D-011** — Tags: M0 = `v0.0.0`, M1..M6 = `v0.1.0`..`v0.6.0`, M7 = `v1.0.0`. (M0)
+- **D-012** — Token names use DTCG-style `{palette.x.y}` references; primitives live under `palette.*` and are private. 'No orphans' means every palette scale and every non-scale base color is referenced by at least one semantic token, and every reference resolves. (M1)
+- **D-013** — Focus ring is blue (`blue.600` / `blue.300` / `#FFD23F` in HC), not brand teal, so focus is never confused with selection or the primary action. (M1)
