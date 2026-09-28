@@ -14,7 +14,14 @@ interface Props {
 }
 const { slug } = Astro.props;
 const doc = docFor(slug);
-const generated = (components as Record<string, { components: never[]; tokens: string[] }>)[slug]!;
+interface Generated {
+  components: {
+    name: string;
+    props: { name: string; type: string; required: boolean; default: string | null; description: string }[];
+  }[];
+  tokens: string[];
+}
+const generated = (components as unknown as Record<string, Generated>)[slug]!;
 ---
 
 <Base title={doc.name} description={`${doc.name}: ${doc.rule}`}>
