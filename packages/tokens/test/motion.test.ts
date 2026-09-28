@@ -20,10 +20,7 @@ describe('motion tokens', () => {
   });
 
   it('names loop periods separately from transition durations', () => {
-    expect(ofType('loop').map((t) => t.name)).toEqual([
-      'motion.loop.shimmer',
-      'motion.loop.spin',
-    ]);
+    expect(ofType('loop').map((t) => t.name)).toEqual(['motion.loop.shimmer', 'motion.loop.spin']);
   });
 
   it('keeps every duration between 80 and 600 ms', () => {
