@@ -9,5 +9,6 @@ export const routes = [
   '/foundations/motion',
   '/components',
   '/principles',
+  '/lab',
   ...components.map((c) => `/components/${c.slug}`),
 ];
