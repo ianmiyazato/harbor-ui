@@ -4,6 +4,7 @@
  * Records requestAnimationFrame deltas and Long Animation Frames (LoAF) while each tile's
  * interaction runs, unthrottled and with 4× CPU throttling, and writes docs/perf/lab.md.
  */
+/* global window, requestAnimationFrame */ // used inside page.evaluate (runs in the browser)
 import { chromium } from '@playwright/test';
 import { writeFileSync } from 'node:fs';
 
