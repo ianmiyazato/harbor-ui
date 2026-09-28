@@ -22,6 +22,10 @@ async function open(page: Page, slug: string, theme: string, label: string) {
     .getByRole('radio', { name: label })
     .check();
   await page.evaluate(() => document.fonts.ready);
+  // Overlays open from the live demo, so wait until its island has hydrated.
+  await page.waitForFunction(() =>
+    [...document.querySelectorAll('[data-demo] astro-island')].every((i) => !i.hasAttribute('ssr')),
+  );
 }
 
 for (const c of components) {
