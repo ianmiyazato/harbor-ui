@@ -24,12 +24,14 @@
     "lighthouse": "lhci autorun",
     "test:coverage": "vitest run --coverage",
     "mutation": "stryker run",
+    "changeset": "changeset",
     "size": "pnpm --filter @ianmiyazato/harbor-react size",
     "format": "prettier --write .",
     "deploy:prod": "vercel deploy --prod"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@changesets/cli": "^2.31.1",
     "@eslint/js": "^9.39.5",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.63.0",
