@@ -19,6 +19,13 @@ describe('motion tokens', () => {
     ).toEqual({ instant: 80, fast: 160, base: 240, slow: 320, deliberate: 480, crossfade: 200 });
   });
 
+  it('names loop periods separately from transition durations', () => {
+    expect(ofType('loop').map((t) => t.name)).toEqual([
+      'motion.loop.shimmer',
+      'motion.loop.spin',
+    ]);
+  });
+
   it('keeps every duration between 80 and 600 ms', () => {
     for (const t of ofType('duration')) {
       expect(t.unit, t.name).toBe('ms');
