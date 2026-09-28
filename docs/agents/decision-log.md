@@ -15,3 +15,4 @@ Format: `D-NNN — decision. Why. (milestone)`. Newest last.
 - **D-011** — Tags: M0 = `v0.0.0`, M1..M6 = `v0.1.0`..`v0.6.0`, M7 = `v1.0.0`. (M0)
 - **D-012** — Token names use DTCG-style `{palette.x.y}` references; primitives live under `palette.*` and are private. 'No orphans' means every palette scale and every non-scale base color is referenced by at least one semantic token, and every reference resolves. (M1)
 - **D-013** — Focus ring is blue (`blue.600` / `blue.300` / `#FFD23F` in HC), not brand teal, so focus is never confused with selection or the primary action. (M1)
+- **D-014** — Two motion additions beyond the spec list, both still named tokens: `motion.duration.crossfade` = 200 ms (the lab's skeleton-to-content crossfade is specified at 200 ms, which is not one of the five scale steps) and `motion.loop.shimmer` = 1400 ms (a loop period, not a transition, so it is typed `loop` and exempt from the 80–600 ms range). Springs settle at 0.5% of target. (M1)
