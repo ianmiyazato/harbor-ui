@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/toast';
+---
+
+<ComponentPage slug="toast">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">A confirmation of what just happened, with an undo.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">An error that needs action disappears before it can be read.</Fragment>
+</ComponentPage>

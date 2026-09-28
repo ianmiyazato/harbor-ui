@@ -8,4 +8,5 @@ export const site = {
 /** Primary navigation. Items are added as their pages ship. */
 export const nav: { href: string; label: string }[] = [
   { href: '/foundations', label: 'Foundations' },
+  { href: '/components', label: 'Components' },
 ];

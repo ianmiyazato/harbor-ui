@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/icon-button';
+---
+
+<ComponentPage slug="icon-button">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">Familiar icons get an icon button (and a tooltip); destructive actions get words.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">An unfamiliar icon, and an icon-only delete that is easy to hit by mistake.</Fragment>
+</ComponentPage>

@@ -1,0 +1,122 @@
+---
+interface Prop {
+  name: string;
+  type: string;
+  required: boolean;
+  default: string | null;
+  description: string;
+}
+interface Props {
+  components: { name: string; props: Prop[] }[];
+}
+const { components } = Astro.props;
+const documented = components.filter((c) => c.props.length > 0);
+const passthrough = components.filter((c) => c.props.length === 0).map((c) => c.name);
+---
+
+{
+  documented.map((c) => (
+    <div class="table-wrap">
+      <table>
+        <caption>{c.name} props</caption>
+        <thead>
+          <tr>
+            <th scope="col">Prop</th>
+            <th scope="col">Type</th>
+            <th scope="col">Default</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {c.props.map((p) => (
+            <tr>
+              <th scope="row">
+                <code>{p.name}</code>
+              </th>
+              <td>
+                <code class="type">{p.type}</code>
+              </td>
+              <td>
+                {p.required ? (
+                  <span class="req">Required</span>
+                ) : p.default ? (
+                  <code>{p.default}</code>
+                ) : (
+                  <span class="none">–</span>
+                )}
+              </td>
+              <td>{p.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ))
+}
+{
+  passthrough.length > 0 && (
+    <p class="pass">
+      {passthrough.join(', ')} accept their Radix primitive's props and native HTML attributes;
+      Harbor adds styling only.
+    </p>
+  )
+}
+<p class="pass">Generated at build time from the TypeScript types in <code>packages/react</code>. Native HTML attributes pass through.</p>
+
+<style>
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--hb-font-size-md);
+    line-height: var(--hb-font-leading-md);
+  }
+
+  caption {
+    padding-block-end: var(--hb-space-2);
+    font-weight: var(--hb-font-weight-semibold);
+    text-align: start;
+  }
+
+  th,
+  td {
+    padding: var(--hb-space-2) var(--hb-space-3);
+    border-block-end: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  thead th {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+    font-weight: var(--hb-font-weight-medium);
+  }
+
+  tbody th {
+    font-weight: var(--hb-font-weight-regular);
+    white-space: nowrap;
+  }
+
+  .type {
+    font-size: var(--hb-font-size-sm);
+    overflow-wrap: anywhere;
+  }
+
+  .req {
+    color: var(--hb-color-text-danger);
+    font-size: var(--hb-font-size-sm);
+    font-weight: var(--hb-font-weight-medium);
+  }
+
+  .none,
+  .pass {
+    color: var(--hb-color-text-muted);
+  }
+
+  .pass {
+    font-size: var(--hb-font-size-sm);
+  }
+</style>

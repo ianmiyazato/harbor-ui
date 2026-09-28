@@ -1,0 +1,77 @@
+---
+import { Badge } from '@ianmiyazato/harbor-react';
+import Base from '../../layouts/Base.astro';
+import { componentDocs } from '../../lib/components';
+---
+
+<Base title="Components" description="Twelve accessible Harbor components, each with every state in three themes.">
+  <div class="container page-header">
+    <p class="eyebrow">Components</p>
+    <h1>Twelve components, every state</h1>
+    <p class="lede">
+      Small surface, deep quality: each component documents default, hover, focus, active,
+      disabled, loading and error where they apply, in light, dark and high contrast.
+    </p>
+  </div>
+  <ul class="container grid">
+    {
+      componentDocs.map((c) => (
+        <li class="card item">
+          <a href={`/components/${c.slug}`}>
+            {c.name}
+            <span class="visually-hidden">: {c.rule}</span>
+          </a>
+          <p aria-hidden="true">{c.rule}</p>
+          {c.radix && <Badge tone="info" size="sm">Radix</Badge>}
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--hb-space-4);
+    margin-block: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    position: relative;
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: var(--hb-space-2);
+    padding: var(--hb-space-5);
+    transition: border-color var(--hb-motion-duration-fast) var(--hb-motion-easing-standard);
+  }
+
+  .item:hover {
+    border-color: var(--hb-color-border-strong);
+  }
+
+  .item a {
+    color: var(--hb-color-text-default);
+    font-family: var(--hb-font-family-display);
+    font-size: var(--hb-font-size-lg);
+    line-height: var(--hb-font-leading-lg);
+    font-weight: var(--hb-font-weight-semibold);
+    text-decoration: none;
+  }
+
+  .item a::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: '';
+  }
+
+  .item p {
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-md);
+    line-height: var(--hb-font-leading-md);
+  }
+</style>

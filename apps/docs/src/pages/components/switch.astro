@@ -1,0 +1,12 @@
+---
+import ComponentPage from '../../layouts/ComponentPage.astro';
+import { Do, Dont, Playground } from '../../demos/switch';
+---
+
+<ComponentPage slug="switch">
+  <Playground slot="demo" client:visible />
+  <Do slot="do" />
+  <Fragment slot="do-caption">The setting applies the moment it flips.</Fragment>
+  <Dont slot="dont" />
+  <Fragment slot="dont-caption">A switch that waits for a Save button behaves like a checkbox.</Fragment>
+</ComponentPage>

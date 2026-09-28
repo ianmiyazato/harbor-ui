@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "node scripts/generate-props.ts && astro dev",
+    "build": "node scripts/generate-props.ts && astro build",
     "preview": "astro preview --port 4321",
-    "typecheck": "astro check"
+    "typecheck": "node scripts/generate-props.ts && astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",

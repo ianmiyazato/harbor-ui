@@ -1,0 +1,108 @@
+---
+/**
+ * A demo region with its own Light / Dark / High contrast toggle. The toggle only sets
+ * data-theme on this frame: tokens.css re-declares every semantic variable under [data-theme],
+ * so the components inside re-theme while the page stays put.
+ */
+interface Props {
+  label: string;
+  id: string;
+}
+const { label, id } = Astro.props;
+---
+
+<section class="demo-wrap" aria-label={label}>
+  <fieldset class="toggle" role="radiogroup" aria-label="Demo theme" data-frame-toggle={id}>
+    <legend class="visually-hidden">Demo theme</legend>
+    {
+      [
+        ['light', 'Light'],
+        ['dark', 'Dark'],
+        ['hc', 'High contrast'],
+      ].map(([value, text]) => (
+        <label>
+          <input type="radio" name={id} value={value} />
+          <span>{text}</span>
+        </label>
+      ))
+    }
+  </fieldset>
+  <div class="frame" data-demo id={id}>
+    <slot />
+  </div>
+</section>
+
+<script>
+  for (const group of document.querySelectorAll<HTMLElement>('[data-frame-toggle]')) {
+    const frame = document.getElementById(group.dataset.frameToggle ?? '');
+    const page = () =>
+      document.documentElement.dataset.theme ??
+      (matchMedia('(prefers-contrast: more)').matches ? 'hc' : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    for (const radio of group.querySelectorAll<HTMLInputElement>('input')) {
+      radio.checked = radio.value === page();
+      radio.addEventListener('change', () => frame?.setAttribute('data-theme', radio.value));
+    }
+  }
+</script>
+
+<style>
+  .demo-wrap {
+    display: grid;
+    gap: var(--hb-space-3);
+  }
+
+  .toggle {
+    display: inline-flex;
+    justify-self: end;
+    gap: var(--hb-space-1);
+    margin: 0;
+    padding: var(--hb-space-1);
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-md);
+  }
+
+  .toggle label {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .toggle input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .toggle span {
+    padding: var(--hb-space-1) var(--hb-space-2);
+    border-radius: var(--hb-radius-sm);
+    color: var(--hb-color-text-muted);
+    font-size: var(--hb-font-size-sm);
+    line-height: var(--hb-font-leading-sm);
+    font-weight: var(--hb-font-weight-medium);
+  }
+
+  .toggle input:checked + span {
+    background-color: var(--hb-color-action-secondary);
+    color: var(--hb-color-text-default);
+  }
+
+  .toggle input:focus-visible + span {
+    outline: var(--hb-border-focus-width) solid var(--hb-color-border-focus);
+    outline-offset: var(--hb-border-focus-offset);
+  }
+
+  .frame {
+    position: relative;
+    display: grid;
+    gap: var(--hb-space-8);
+    min-height: 16rem;
+    padding: var(--hb-space-8);
+    overflow: hidden;
+    border: var(--hb-border-width-thin) solid var(--hb-color-border-default);
+    border-radius: var(--hb-radius-xl);
+    background-color: var(--hb-color-surface-default);
+    color: var(--hb-color-text-default);
+  }
+</style>
