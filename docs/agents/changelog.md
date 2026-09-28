@@ -7,3 +7,4 @@
 - M1 #6 tokens: contrast matrix, 39 pairs × 3 themes = 117 checks, all passing; writes dist/contrast-report.json.
 - M1 #7 tokens: motion (6 durations, 3 easings, 3 springs → CSS linear(), distances, scales, shimmer loop), each with a reduced counterpart.
 - M1 #8 tokens: build emits tokens.css (themes, OS prefs, timescale, reduced motion), tokens.json, typed index.js/d.ts, contrast report; 205 tokens.
+- M2 #9 react: package scaffold (Vite lib, preserveModules, CSS Modules, jsdom tests), useReducedMotion.
